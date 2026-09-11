@@ -17,6 +17,9 @@ export const metadata: Metadata = {
   title: "Asang | Architecture & Interiors",
   description:
     "Asang creates thoughtful architectural spaces and refined interiors.",
+  icons: {
+    icon: "/favicon.png",
+  },
 };
 
 export default function RootLayout({
