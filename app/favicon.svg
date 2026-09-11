@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <defs>
+    <!-- Teal glass gradient -->
+    <linearGradient id="glassTeal" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#d1e8e6" />
+      <stop offset="40%" stop-color="#7aadaa" />
+      <stop offset="80%" stop-color="#467876" />
+      <stop offset="100%" stop-color="#2a4d4c" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background (remove this line if you want the favicon to have a transparent background) -->
+  <rect width="120" height="120" fill="#e6dfd4" />
+
+  <!-- Left thin leg and crossbar -->
+  <polyline 
+    points="58,25 25,90 70,90" 
+    fill="none" 
+    stroke="#0a0a0a" 
+    stroke-width="4" 
+    stroke-linecap="round"
+    stroke-linejoin="miter" 
+  />
+
+  <!-- Right thick leg with teal gradient -->
+  <polygon 
+    points="58,25 68,25 95,90 75,90" 
+    fill="url(#glassTeal)" 
+    stroke="#0a0a0a" 
+    stroke-width="3" 
+    stroke-linejoin="round"
+  />
+  
+  <!-- Subtle inner highlight for 3D effect -->
+  <polygon 
+    points="61,28 66,28 91,87 77,87" 
+    fill="none" 
+    stroke="#ffffff" 
+    stroke-width="1" 
+    opacity="0.5"
+  />
+</svg>
