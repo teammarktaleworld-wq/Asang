@@ -1,3 +1,9 @@
+
+
+
+
+
+
 "use client";
 
 import { useState, useEffect, useRef } from "react";
@@ -9,41 +15,55 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
   const lastScrollY = useRef(0);
   const pathname = usePathname();
 
   const navLinks = [
+    { name: "Portfolio", href: "/portfolio" },
+    { name: "Villas", href: "/villas" },
+    { name: "Services", href: "/services" },
+    { name: "Insights", href: "/insights" },
     { name: "About", href: "/about" },
-    { name: "Projects", href: "/projects" },
-    { name: "Studio", href: "/studio" },
-    { name: "Blog", href: "/blog" },
+    { name: "Contact", href: "/contact" },
   ];
 
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
 
-      // Scrolled past the transparent threshold
+      // Transparent at top of hero
+      // White navbar after scrolling
       setIsScrolled(currentScrollY > 20);
 
-      // Hide when scrolling DOWN past 80px, show when scrolling UP
+      // Always show navbar near the top
       if (currentScrollY < 80) {
         setIsVisible(true);
       } else if (currentScrollY > lastScrollY.current + 8) {
-        // Scrolling down — hide
+        // Hide while scrolling down
         setIsVisible(false);
         setIsMobileMenuOpen(false);
       } else if (currentScrollY < lastScrollY.current - 8) {
-        // Scrolling up — show
+        // Show while scrolling up
         setIsVisible(true);
       }
 
       lastScrollY.current = currentScrollY;
     };
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, {
+      passive: true,
+    });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
+
+  // Navigation text:
+  // White over hero
+  // Black after scrolling
+  const textColor = isScrolled ? "#111111" : "#ffffff";
 
   return (
     <header
@@ -52,96 +72,185 @@ export default function Navbar() {
         top: 0,
         left: 0,
         right: 0,
-        zIndex: 50,
-        transform: isVisible ? "translateY(0)" : "translateY(-110%)",
+
+        zIndex: 100,
+
+        transform: isVisible
+          ? "translateY(0)"
+          : "translateY(-110%)",
+
         opacity: isVisible ? 1 : 0,
-        transition: "transform 0.45s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.35s ease",
+
+        transition:
+          "transform 0.45s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.35s ease",
+
         pointerEvents: isVisible ? "auto" : "none",
       }}
     >
+      {/* =====================================================
+          NAVBAR
+          ===================================================== */}
+
       <nav
         style={{
+          position: "relative",
+
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
+
           width: "100%",
-          padding: isScrolled ? "12px 32px" : "18px 32px",
+
+          padding: isScrolled
+            ? "12px 32px"
+            : "18px 38px",
+
+          // Transparent over hero
           background: isScrolled
-            ? "rgba(255,255,255,0.92)"
-            : "rgba(255,255,255,1)",
-          backdropFilter: isScrolled ? "blur(16px)" : "none",
+            ? "rgba(255, 255, 255, 0.94)"
+            : "transparent",
+
+          backdropFilter: isScrolled
+            ? "blur(18px)"
+            : "none",
+
+          WebkitBackdropFilter: isScrolled
+            ? "blur(18px)"
+            : "none",
+
           boxShadow: isScrolled
-            ? "0 2px 24px rgba(0,0,0,0.07)"
-            : "0 2px 16px rgba(0,0,0,0.06)",
-          transition: "padding 0.4s ease, background 0.4s ease, box-shadow 0.4s ease",
-          borderBottom: "1px solid rgba(0,0,0,0.05)",
+            ? "0 2px 24px rgba(0, 0, 0, 0.08)"
+            : "none",
+
+          borderBottom: isScrolled
+            ? "1px solid rgba(0, 0, 0, 0.06)"
+            : "1px solid transparent",
+
+          transition:
+            "padding 0.4s ease, background 0.4s ease, box-shadow 0.4s ease, border 0.4s ease",
         }}
       >
-        {/* Logo */}
-        <Link href="/" style={{ display: "flex", alignItems: "center", flexShrink: 0 }}>
+        {/* =====================================================
+            LOGO
+            ===================================================== */}
+
+        <Link
+          href="/"
+          className="logo-link"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            flexShrink: 0,
+
+            position: "relative",
+            zIndex: 10,
+          }}
+        >
           <Image
-            src="/Asanglogo.jpeg"
+            src="/Asanglogotrans.png"
             alt="Asang Design Studio"
-            width={120}
-            height={40}
+            width={200}
+            height={100}
             priority
+            className="asang-logo"
             style={{
               objectFit: "contain",
               width: "auto",
-              height: isScrolled ? "34px" : "40px",
+              height: isScrolled
+                ? "48px"
+                : "60px",
+              filter: "none",
               transition: "height 0.4s ease",
             }}
           />
         </Link>
 
-        {/* Desktop Nav Links — centered absolutely */}
+        {/* =====================================================
+            DESKTOP NAVIGATION
+            ===================================================== */}
+
         <ul
+          className="desktop-nav"
           style={{
             display: "none",
+
             position: "absolute",
             left: "50%",
+
             transform: "translateX(-50%)",
+
             listStyle: "none",
+
             margin: 0,
             padding: 0,
+
             gap: "40px",
+
             alignItems: "center",
           }}
-          className="desktop-nav"
         >
           {navLinks.map((link) => {
             const isActive = pathname === link.href;
+
             return (
-              <li key={link.name} style={{ position: "relative" }}>
+              <li
+                key={link.name}
+                style={{
+                  position: "relative",
+                }}
+              >
                 <Link
                   href={link.href}
-                  style={{
-                    fontSize: "11px",
-                    letterSpacing: "0.18em",
-                    fontWeight: 500,
-                    textTransform: "uppercase",
-                    color: isActive ? "#000" : "#555",
-                    textDecoration: "none",
-                    paddingBottom: "4px",
-                    transition: "color 0.2s",
-                  }}
                   className="nav-link"
+                  style={{
+                    position: "relative",
+
+                    display: "inline-block",
+
+                    fontSize: "11px",
+
+                    letterSpacing: "0.18em",
+
+                    fontWeight: 500,
+
+                    textTransform: "uppercase",
+
+                    color: textColor,
+
+                    textDecoration: "none",
+
+                    paddingBottom: "6px",
+
+                    transition:
+                      "color 0.3s ease, opacity 0.3s ease",
+                  }}
                 >
                   {link.name}
-                  {/* Active / hover underline */}
+
+                  {/* Underline */}
+
                   <span
+                    className="nav-underline"
                     style={{
                       position: "absolute",
+
                       bottom: 0,
                       left: 0,
+
                       width: "100%",
                       height: "1.5px",
-                      background: "#000",
+
+                      background: textColor,
+
                       transformOrigin: "left",
-                      transform: isActive ? "scaleX(1)" : "scaleX(0)",
-                      transition: "transform 0.3s ease",
+
+                      transform: isActive
+                        ? "scaleX(1)"
+                        : "scaleX(0)",
+
+                      transition:
+                        "transform 0.3s ease, background 0.3s ease",
                     }}
-                    className="nav-underline"
                   />
                 </Link>
               </li>
@@ -149,147 +258,316 @@ export default function Navbar() {
           })}
         </ul>
 
-        {/* Desktop CTA */}
-        <div className="desktop-cta" style={{ display: "none", flexShrink: 0 }}>
+        {/* =====================================================
+            DESKTOP CONTACT BUTTON
+            ===================================================== */}
+
+        <div
+          className="desktop-cta"
+          style={{
+            display: "none",
+
+            flexShrink: 0,
+
+            position: "relative",
+            zIndex: 10,
+          }}
+        >
           <Link
             href="/contact"
-            style={{
-              display: "inline-block",
-              padding: "9px 24px",
-              fontSize: "11px",
-              letterSpacing: "0.14em",
-              fontWeight: 600,
-              textTransform: "uppercase",
-              color: "#fff",
-              background: "#111",
-              borderRadius: "100px",
-              textDecoration: "none",
-              transition: "background 0.25s ease, box-shadow 0.25s ease",
-            }}
             className="cta-btn"
+            style={{
+              display: "inline-flex",
+
+              alignItems: "center",
+              justifyContent: "center",
+
+              minWidth: "160px",
+
+              padding: "10px 25px",
+
+              fontSize: "11px",
+
+              letterSpacing: "0.14em",
+
+              fontWeight: 600,
+
+              textTransform: "uppercase",
+
+              color: "#ffffff",
+
+              background: isScrolled
+                ? "#111111"
+                : "rgba(0, 0, 0, 0.22)",
+
+              border: isScrolled
+                ? "1px solid #111111"
+                : "1px solid rgba(255,255,255,0.55)",
+
+              borderRadius: "100px",
+
+              textDecoration: "none",
+
+              backdropFilter: isScrolled
+                ? "none"
+                : "blur(8px)",
+
+              WebkitBackdropFilter: isScrolled
+                ? "none"
+                : "blur(8px)",
+
+              transition: "all 0.3s ease",
+            }}
           >
             Contact Us
           </Link>
         </div>
 
-        {/* Mobile Hamburger */}
+        {/* =====================================================
+            MOBILE HAMBURGER
+            ===================================================== */}
+
         <button
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          onClick={() =>
+            setIsMobileMenuOpen(
+              !isMobileMenuOpen
+            )
+          }
           aria-label="Toggle menu"
+          aria-expanded={isMobileMenuOpen}
+          className="mobile-toggle"
           style={{
             display: "flex",
+
             flexDirection: "column",
+
             gap: "5px",
+
             alignItems: "flex-end",
+            justifyContent: "center",
+
             background: "none",
+
             border: "none",
+
             cursor: "pointer",
-            padding: "4px",
+
+            padding: "5px",
+
             marginLeft: "auto",
+
             zIndex: 60,
           }}
-          className="mobile-toggle"
         >
+          {/* First line */}
+
           <span
             style={{
               display: "block",
-              width: "24px",
+
+              width: "25px",
               height: "1.5px",
-              background: "#111",
+
+              background: textColor,
+
               transformOrigin: "center",
-              transition: "transform 0.3s ease, opacity 0.3s ease",
-              transform: isMobileMenuOpen ? "translateY(6.5px) rotate(45deg)" : "none",
+
+              transition:
+                "transform 0.3s ease, opacity 0.3s ease",
+
+              transform: isMobileMenuOpen
+                ? "translateY(6.5px) rotate(45deg)"
+                : "none",
             }}
           />
+
+          {/* Second line */}
+
           <span
             style={{
               display: "block",
-              width: "16px",
+
+              width: "17px",
               height: "1.5px",
-              background: "#111",
-              transition: "opacity 0.3s ease, width 0.3s ease",
-              opacity: isMobileMenuOpen ? 0 : 1,
+
+              background: textColor,
+
+              transition:
+                "opacity 0.3s ease, width 0.3s ease",
+
+              opacity: isMobileMenuOpen
+                ? 0
+                : 1,
             }}
           />
+
+          {/* Third line */}
+
           <span
             style={{
               display: "block",
-              width: "20px",
+
+              width: "21px",
               height: "1.5px",
-              background: "#111",
+
+              background: textColor,
+
               transformOrigin: "center",
-              transition: "transform 0.3s ease, opacity 0.3s ease",
-              transform: isMobileMenuOpen ? "translateY(-6.5px) rotate(-45deg)" : "none",
+
+              transition:
+                "transform 0.3s ease, opacity 0.3s ease",
+
+              transform: isMobileMenuOpen
+                ? "translateY(-6.5px) rotate(-45deg)"
+                : "none",
             }}
           />
         </button>
       </nav>
 
-      {/* Mobile Dropdown */}
+      {/* =====================================================
+          MOBILE MENU
+          ===================================================== */}
+
       <div
         style={{
           position: "absolute",
+
           top: "100%",
+
           left: 0,
           right: 0,
-          background: "rgba(255,255,255,0.97)",
+
+          background:
+            "rgba(255,255,255,0.97)",
+
           backdropFilter: "blur(20px)",
-          borderBottom: "1px solid rgba(0,0,0,0.06)",
+
+          WebkitBackdropFilter:
+            "blur(20px)",
+
+          borderBottom:
+            "1px solid rgba(0,0,0,0.06)",
+
           overflow: "hidden",
-          maxHeight: isMobileMenuOpen ? "400px" : "0px",
-          opacity: isMobileMenuOpen ? 1 : 0,
-          transform: isMobileMenuOpen ? "translateY(0)" : "translateY(-8px)",
+
+          maxHeight: isMobileMenuOpen
+            ? "500px"
+            : "0px",
+
+          opacity: isMobileMenuOpen
+            ? 1
+            : 0,
+
+          transform: isMobileMenuOpen
+            ? "translateY(0)"
+            : "translateY(-8px)",
+
           transition:
             "max-height 0.4s cubic-bezier(0.4,0,0.2,1), opacity 0.3s ease, transform 0.35s ease",
-          pointerEvents: isMobileMenuOpen ? "auto" : "none",
+
+          pointerEvents:
+            isMobileMenuOpen
+              ? "auto"
+              : "none",
         }}
       >
         <div
           style={{
             display: "flex",
+
             flexDirection: "column",
+
             alignItems: "center",
-            gap: "0",
-            padding: "8px 24px 24px",
+
+            gap: 0,
+
+            padding:
+              "8px 24px 25px",
           }}
         >
-          {navLinks.map((link, i) => (
-            <Link
-              key={link.name}
-              href={link.href}
-              onClick={() => setIsMobileMenuOpen(false)}
-              style={{
-                display: "block",
-                width: "100%",
-                textAlign: "center",
-                padding: "14px 0",
-                fontSize: "11px",
-                letterSpacing: "0.2em",
-                fontWeight: 500,
-                textTransform: "uppercase",
-                color: pathname === link.href ? "#000" : "#666",
-                textDecoration: "none",
-                borderBottom: i < navLinks.length - 1 ? "1px solid rgba(0,0,0,0.06)" : "none",
-                transition: "color 0.2s",
-              }}
-            >
-              {link.name}
-            </Link>
-          ))}
+          {/* Mobile Links */}
+
+          {navLinks.map((link, index) => {
+            const isActive =
+              pathname === link.href;
+
+            return (
+              <Link
+                key={link.name}
+                href={link.href}
+                onClick={() =>
+                  setIsMobileMenuOpen(false)
+                }
+                style={{
+                  display: "block",
+
+                  width: "100%",
+
+                  textAlign: "center",
+
+                  padding: "15px 0",
+
+                  fontSize: "11px",
+
+                  letterSpacing: "0.2em",
+
+                  fontWeight: 500,
+
+                  textTransform: "uppercase",
+
+                  color: isActive
+                    ? "#000000"
+                    : "#666666",
+
+                  textDecoration: "none",
+
+                  borderBottom:
+                    index <
+                      navLinks.length - 1
+                      ? "1px solid rgba(0,0,0,0.06)"
+                      : "none",
+
+                  transition:
+                    "color 0.2s ease",
+                }}
+              >
+                {link.name}
+              </Link>
+            );
+          })}
+
+          {/* Mobile Contact */}
+
           <Link
             href="/contact"
-            onClick={() => setIsMobileMenuOpen(false)}
+            onClick={() =>
+              setIsMobileMenuOpen(false)
+            }
             style={{
-              display: "inline-block",
+              display: "inline-flex",
+
+              alignItems: "center",
+              justifyContent: "center",
+
               marginTop: "20px",
-              padding: "11px 32px",
+
+              padding: "12px 32px",
+
               fontSize: "11px",
+
               letterSpacing: "0.14em",
+
               fontWeight: 600,
+
               textTransform: "uppercase",
-              color: "#fff",
-              background: "#111",
+
+              color: "#ffffff",
+
+              background: "#111111",
+
               borderRadius: "100px",
+
               textDecoration: "none",
             }}
           >
@@ -298,18 +576,65 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Scoped responsive styles */}
+      {/* =====================================================
+          RESPONSIVE STYLES
+          ===================================================== */}
+
       <style>{`
         @media (min-width: 768px) {
-          .desktop-nav { display: flex !important; }
-          .desktop-cta { display: block !important; }
-          .mobile-toggle { display: none !important; }
+          .desktop-nav {
+            display: flex !important;
+          }
+
+          .desktop-cta {
+            display: block !important;
+          }
+
+          .mobile-toggle {
+            display: none !important;
+          }
         }
-        .nav-link:hover { color: #000 !important; }
-        .nav-link:hover .nav-underline { transform: scaleX(1) !important; }
+
+        .nav-link:hover {
+          opacity: 0.7;
+        }
+
+        .nav-link:hover .nav-underline {
+          transform: scaleX(1) !important;
+        }
+
         .cta-btn:hover {
-          background: #333 !important;
-          box-shadow: 0 4px 16px rgba(0,0,0,0.18) !important;
+          background: ${isScrolled
+          ? "#333333"
+          : "rgba(0,0,0,0.38)"
+        } !important;
+
+          border-color: ${isScrolled
+          ? "#333333"
+          : "rgba(255,255,255,0.85)"
+        } !important;
+
+          transform: translateY(-1px);
+
+          box-shadow: ${isScrolled
+          ? "0 4px 16px rgba(0,0,0,0.18)"
+          : "0 4px 20px rgba(0,0,0,0.25)"
+        } !important;
+        }
+
+        .logo-link {
+          transition: opacity 0.3s ease;
+        }
+
+        .logo-link:hover {
+          opacity: 0.85;
+        }
+
+        @media (max-width: 767px) {
+          nav {
+            padding-left: 20px !important;
+            padding-right: 20px !important;
+          }
         }
       `}</style>
     </header>
