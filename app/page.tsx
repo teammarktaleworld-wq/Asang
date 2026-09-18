@@ -1,11 +1,7 @@
-
-
-
 import ContactCTA from "./components/sections/ContactCTA";
 import Philosophy from "./components/sections/Philosophy";
 import SelectedProjects from "./components/sections/SelectedProjects";
 import Testimonials from "./components/sections/Testimonials";
-import Footer from "./components/Footer";
 import Hero from "./components/Hero";
 import TrustBar from "./components/sections/TrustBar";
 
@@ -18,7 +14,6 @@ export default function Home() {
       <SelectedProjects />
       <Testimonials />
       <ContactCTA />
-      <Footer />
     </main>
   );
 }

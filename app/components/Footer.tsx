@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import {
   Cormorant_Garamond,
@@ -43,7 +44,7 @@ const whatsappPhoneDisplay =
   process.env.NEXT_PUBLIC_WHATSAPP_PHONE_DISPLAY || "9205 040 314";
 
 const contactEmail =
-  process.env.NEXT_PUBLIC_CONTACT_EMAIL || "";
+  process.env.NEXT_PUBLIC_CONTACT_EMAIL || "hello@asangstudio.com";
 
 const officeAddressLine1 =
   process.env.NEXT_PUBLIC_OFFICE_ADDRESS_LINE1 ||
@@ -53,20 +54,123 @@ const officeAddressLine2 =
   process.env.NEXT_PUBLIC_OFFICE_ADDRESS_LINE2 ||
   "NOIDA - 201301, Uttar Pradesh, India";
 
-const instagramUrl =
-  process.env.NEXT_PUBLIC_INSTAGRAM_URL || "";
-
-const pinterestUrl =
-  process.env.NEXT_PUBLIC_PINTEREST_URL || "";
-
-const linkedinUrl =
-  process.env.NEXT_PUBLIC_LINKEDIN_URL || "";
+const officeAddressFull =
+  process.env.NEXT_PUBLIC_OFFICE_ADDRESS ||
+  `${officeAddressLine1}, ${officeAddressLine2}`;
 
 // ============================================================
-// WHATSAPP URL
+// SOCIAL LINKS — only the ones actually set in env render
 // ============================================================
 
-const whatsappUrl = `https://wa.me/${whatsappPhone}`;
+const socialLinks = [
+  { name: "Instagram", url: process.env.NEXT_PUBLIC_INSTAGRAM_URL, icon: "instagram" },
+  { name: "Facebook", url: process.env.NEXT_PUBLIC_FACEBOOK_URL, icon: "facebook" },
+  { name: "LinkedIn", url: process.env.NEXT_PUBLIC_LINKEDIN_URL, icon: "linkedin" },
+  { name: "YouTube", url: process.env.NEXT_PUBLIC_YOUTUBE_URL, icon: "youtube" },
+  { name: "X", url: process.env.NEXT_PUBLIC_X_URL, icon: "x" },
+  { name: "Pinterest", url: process.env.NEXT_PUBLIC_PINTEREST_URL, icon: "pinterest" },
+].filter((s): s is { name: string; url: string; icon: string } => Boolean(s.url));
+
+// ============================================================
+// WHATSAPP / MAPS URLS
+// ============================================================
+
+const whatsappUrl = `https://wa.me/${whatsappPhone}?text=${encodeURIComponent(
+  `Hi ${contactPerson}, I found ASANG Design Studio online and would like to discuss a project.`
+)}`;
+
+const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+  officeAddressFull
+)}`;
+
+// ============================================================
+// ICONS — matches the line weight used across the site
+// ============================================================
+
+function SocialIcon({ name, className }: { name: string; className?: string }) {
+  const common = {
+    className,
+    viewBox: "0 0 24 24",
+    fill: "none" as const,
+    stroke: "currentColor",
+    strokeWidth: 1.5,
+    strokeLinecap: "round" as const,
+    strokeLinejoin: "round" as const,
+  };
+
+  switch (name) {
+    case "instagram":
+      return (
+        <svg {...common}>
+          <rect x="3" y="3" width="18" height="18" rx="5" />
+          <circle cx="12" cy="12" r="4" />
+          <circle cx="17.2" cy="6.8" r="0.8" fill="currentColor" stroke="none" />
+        </svg>
+      );
+    case "facebook":
+      return (
+        <svg {...common}>
+          <path d="M14 8.5h2.5V5H14a4 4 0 0 0-4 4v2H8v3.5h2V21h3.5v-6.5H16l.5-3.5h-3V9c0-.4.1-.5.5-.5Z" />
+        </svg>
+      );
+    case "linkedin":
+      return (
+        <svg {...common}>
+          <rect x="3" y="3" width="18" height="18" rx="3" />
+          <path d="M7.5 10v6.5M7.5 7.2v.1M11.5 16.5V13a2 2 0 0 1 4 0v3.5M11.5 10v6.5" />
+        </svg>
+      );
+    case "youtube":
+      return (
+        <svg {...common}>
+          <rect x="2.5" y="6" width="19" height="12" rx="4" />
+          <path d="m10.5 9.5 5 2.5-5 2.5Z" fill="currentColor" stroke="none" />
+        </svg>
+      );
+    case "x":
+      return (
+        <svg {...common}>
+          <path d="M5 5l14 14M19 5 5 19" />
+        </svg>
+      );
+    case "pinterest":
+      return (
+        <svg {...common}>
+          <circle cx="12" cy="12" r="9" />
+          <path d="M10 18c1-3 1.3-5 2-8a2 2 0 1 1 3.6 1.4c-.4 1.6-1.6 3.6-3.6 3.6-1 0-1.5-.5-1.8-1" />
+        </svg>
+      );
+    case "phone":
+      return (
+        <svg {...common}>
+          <path d="M4 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L14 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 2 6a2 2 0 0 1 2-2Z" />
+        </svg>
+      );
+    case "mail":
+      return (
+        <svg {...common}>
+          <rect x="3" y="5" width="18" height="14" rx="2" />
+          <path d="m4 7 8 6 8-6" />
+        </svg>
+      );
+    case "whatsapp":
+      return (
+        <svg {...common} strokeWidth={1.4}>
+          <path d="M7 17.5 4.5 20l.6-3.4A8 8 0 1 1 8.6 19L7 17.5Z" />
+          <path d="M9 9.3c0 3 2.7 5.7 5.7 5.7 1-1 1-2 .7-2.4l-1.6-.8-1 1a5 5 0 0 1-2-2l1-1-.8-1.6C10.9 8 9.9 8 9 9Z" />
+        </svg>
+      );
+    case "pin":
+      return (
+        <svg {...common}>
+          <path d="M12 21s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12Z" />
+          <circle cx="12" cy="9" r="2.5" />
+        </svg>
+      );
+    default:
+      return null;
+  }
+}
 
 // ============================================================
 // FOOTER
@@ -78,211 +182,82 @@ export default function Footer() {
       className={`
         ${cormorant.variable}
         ${montserrat.variable}
+        relative
+        overflow-hidden
         bg-[#231f20]
         px-6
-        pt-20
+        pt-16
         pb-8
         text-[#e5dcc7]
         sm:px-8
         md:px-16
-        md:pt-24
         lg:px-24
       `}
     >
+      {/* Decorative background ring, consistent with the rest of the site */}
+      <div
+        className="
+          pointer-events-none
+          absolute -right-32 -top-32
+          h-[360px] w-[360px]
+          rounded-full
+          border border-[#c9b58a]/5
+        "
+      />
+
       <motion.div
-        initial={{
-          opacity: 0,
-          y: 30,
-        }}
-        whileInView={{
-          opacity: 1,
-          y: 0,
-        }}
-        viewport={{
-          once: true,
-        }}
-        transition={{
-          duration: 0.8,
-          ease: "easeOut",
-        }}
-        className="mx-auto max-w-7xl"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.7, ease: "easeOut" }}
+        className="relative mx-auto max-w-7xl"
       >
         {/* ==================================================
-            TOP SECTION
+            TOP: BRAND  +  NEWSLETTER
         ================================================== */}
 
-        <div className="mb-20 grid grid-cols-1 gap-14 md:grid-cols-2 md:gap-16">
-
-          {/* ==================================================
-              BRAND IDENTITY
-          ================================================== */}
+        <div
+          className="
+            mb-14
+            grid
+            grid-cols-1
+            gap-10
+            border-b
+            border-[#8f9a9b]/15
+            pb-14
+            md:grid-cols-[1fr_1.1fr]
+            md:gap-16
+          "
+        >
+          {/* Logo / Brand — identity only, no contact details here */}
 
           <div className="flex flex-col items-start">
-
-            {/* Logo / Brand */}
-
             <Link
               href="/"
               aria-label="ASANG Design Studio Home"
-              className="group"
+              className="group inline-block"
             >
-              <h2
+              <Image
+                src="/Asang-logo-trans-white.png"
+                alt="ASANG Design Studio"
+                width={180}
+                height={64}
                 className="
-                  font-[family-name:var(--font-cormorant)]
-                  text-5xl
-                  font-medium
-                  tracking-[0.18em]
-                  text-[#e5dcc7]
-                  transition-colors
+                  h-12
+                  w-auto
+                  object-contain
+                  opacity-90
+                  transition-opacity
                   duration-300
-                  group-hover:text-white
-                  sm:text-6xl
+                  group-hover:opacity-100
                 "
-              >
-                AS
-                <span className="font-light">
-                  A
-                </span>
-                NG
-              </h2>
+              />
             </Link>
-
-            {/* Studio */}
-
-            <div className="mt-3 flex flex-col">
-
-              <span
-                className="
-                  font-[family-name:var(--font-montserrat)]
-                  text-xs
-                  font-semibold
-                  uppercase
-                  tracking-[0.2em]
-                  text-[#e5dcc7]
-                "
-              >
-                Design Studio
-              </span>
-
-              <span
-                className="
-                  mt-1
-                  font-[family-name:var(--font-montserrat)]
-                  text-[10px]
-                  font-medium
-                  uppercase
-                  tracking-[0.22em]
-                  text-[#8f9a9b]
-                  sm:text-xs
-                "
-              >
-                Architecture | Interiors
-              </span>
-            </div>
-
-            {/* Contact Person */}
-
-            <div className="mt-8">
-
-              <p
-                className="
-                  font-[family-name:var(--font-montserrat)]
-                  text-[10px]
-                  font-semibold
-                  uppercase
-                  tracking-[0.25em]
-                  text-[#8f9a9b]
-                "
-              >
-                Contact
-              </p>
-
-              <p
-                className="
-                  mt-2
-                  font-[family-name:var(--font-cormorant)]
-                  text-2xl
-                  font-medium
-                  text-[#e5dcc7]
-                "
-              >
-                {contactPerson}
-              </p>
-
-              {/* Call */}
-
-              <a
-                href={`tel:${contactPhone}`}
-                className="
-                  mt-2
-                  inline-flex
-                  items-center
-                  gap-2
-                  font-[family-name:var(--font-montserrat)]
-                  text-sm
-                  font-medium
-                  text-[#e5dcc7]/80
-                  transition-colors
-                  duration-300
-                  hover:text-white
-                "
-              >
-                <svg
-                  className="h-4 w-4"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  aria-hidden="true"
-                >
-                  <path
-                    d="M22 16.92v3a2 2 0 0 1-2.18 2
-                    19.79 19.79 0 0 1-8.63-3.07
-                    19.5 19.5 0 0 1-6-6
-                    19.79 19.79 0 0 1-3.07-8.67
-                    A2 2 0 0 1 4.11 2h3
-                    a2 2 0 0 1 2 1.72
-                    12.84 12.84 0 0 0 .7 2.81
-                    2 2 0 0 1-.45 2.11L8.09 9.91
-                    a16 16 0 0 0 6 6l1.27-1.27
-                    a2 2 0 0 1 2.11-.45
-                    12.84 12.84 0 0 0 2.81.7
-                    A2 2 0 0 1 22 16.92z"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-
-                {contactPhoneDisplay}
-              </a>
-
-            </div>
-          </div>
-
-          {/* ==================================================
-              NEWSLETTER
-          ================================================== */}
-
-          <div className="flex flex-col justify-center">
-
-            <h3
-              className="
-                mb-4
-                font-[family-name:var(--font-montserrat)]
-                text-sm
-                font-semibold
-                uppercase
-                tracking-widest
-                text-[#e5dcc7]
-              "
-            >
-              Join Our Newsletter
-            </h3>
 
             <p
               className="
-                mb-6
-                max-w-md
+                mt-4
+                max-w-xs
                 font-[family-name:var(--font-montserrat)]
                 text-sm
                 font-medium
@@ -290,142 +265,116 @@ export default function Footer() {
                 text-[#8f9a9b]
               "
             >
-              Receive curated insights on architecture,
-              interior styling, and updates on our latest
-              projects.
+              Thoughtful architecture and refined interiors,
+              designed around how people actually live.
             </p>
+          </div>
 
-            <form
-              onSubmit={(event) => {
-                event.preventDefault();
-              }}
-              className="
-                flex
-                max-w-md
-                border-b
-                border-[#8f9a9b]/40
-                pb-2
-                transition-colors
-                duration-300
-                focus-within:border-[#e5dcc7]
-              "
-            >
-              <input
-                type="email"
-                placeholder="Enter your email address"
-                aria-label="Email address"
-                className="
-                  w-full
-                  bg-transparent
-                  font-[family-name:var(--font-montserrat)]
-                  text-sm
-                  font-medium
-                  text-[#e5dcc7]
-                  outline-none
-                  placeholder:text-[#8f9a9b]/60
-                "
-                required
-              />
+          {/* Newsletter */}
 
-              <button
-                type="submit"
+          <div className="flex flex-col md:items-end">
+            <div className="w-full max-w-sm">
+              <h3
                 className="
-                  ml-4
-                  whitespace-nowrap
+                  mb-3
                   font-[family-name:var(--font-montserrat)]
                   text-xs
                   font-semibold
                   uppercase
-                  tracking-widest
-                  text-[#e5dcc7]/70
-                  transition-colors
-                  duration-300
-                  hover:text-white
+                  tracking-[0.25em]
+                  text-[#e5dcc7]
                 "
               >
-                Subscribe
-              </button>
-            </form>
-
-            {/* WhatsApp / Enquiry */}
-
-            <div className="mt-7">
+                Join Our Newsletter
+              </h3>
 
               <p
                 className="
+                  mb-5
                   font-[family-name:var(--font-montserrat)]
-                  text-[10px]
-                  font-semibold
-                  uppercase
-                  tracking-[0.25em]
+                  text-sm
+                  font-medium
+                  leading-relaxed
                   text-[#8f9a9b]
                 "
               >
-                WhatsApp / Enquiries
+                Curated insights on architecture, interiors,
+                and new project updates.
               </p>
 
-              <a
-                href={whatsappUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+              <form
+                onSubmit={(event) => event.preventDefault()}
                 className="
-                  mt-2
-                  inline-flex
-                  items-center
-                  gap-2
-                  font-[family-name:var(--font-montserrat)]
-                  text-sm
-                  font-semibold
-                  text-[#e5dcc7]
+                  flex
+                  border-b
+                  border-[#8f9a9b]/40
+                  pb-2
                   transition-colors
                   duration-300
-                  hover:text-white
+                  focus-within:border-[#e5dcc7]
                 "
               >
-                {/* WhatsApp Icon */}
+                <input
+                  type="email"
+                  placeholder="Enter your email address"
+                  aria-label="Email address"
+                  className="
+                    w-full
+                    bg-transparent
+                    font-[family-name:var(--font-montserrat)]
+                    text-sm
+                    font-medium
+                    text-[#e5dcc7]
+                    outline-none
+                    placeholder:text-[#8f9a9b]/60
+                  "
+                  required
+                />
 
-                <svg
-                  className="h-5 w-5"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  aria-hidden="true"
+                <button
+                  type="submit"
+                  className="
+                    ml-4
+                    whitespace-nowrap
+                    font-[family-name:var(--font-montserrat)]
+                    text-xs
+                    font-semibold
+                    uppercase
+                    tracking-widest
+                    text-[#e5dcc7]/70
+                    transition-colors
+                    duration-300
+                    hover:text-white
+                  "
                 >
-                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-                </svg>
-
-                {whatsappPhoneDisplay}
-              </a>
+                  Subscribe
+                </button>
+              </form>
             </div>
           </div>
         </div>
 
         {/* ==================================================
-            MIDDLE SECTION
+            EXPLORE  /  CONTACT  /  SOCIAL  /  LEGAL
+            — each piece of information appears exactly once
         ================================================== */}
 
         <div
           className="
-            mb-16
+            mb-14
             grid
             grid-cols-2
             gap-10
-            border-t
-            border-[#8f9a9b]/20
-            pt-16
             md:grid-cols-4
             md:gap-8
           "
         >
+          {/* EXPLORE */}
 
-          {/* ==================================================
-              EXPLORE
-          ================================================== */}
-
-          <div className="flex flex-col gap-4">
-
+          <div className="flex flex-col gap-3">
             <h4
               className="
-                mb-2
+                mb-1
                 font-[family-name:var(--font-montserrat)]
                 text-xs
                 font-semibold
@@ -437,32 +386,18 @@ export default function Footer() {
               Explore
             </h4>
 
-            <FooterLink href="/about">
-              About Us
-            </FooterLink>
-
-            <FooterLink href="/projects">
-              Selected Projects
-            </FooterLink>
-
-            <FooterLink href="/studio">
-              The Studio
-            </FooterLink>
-
-            <FooterLink href="/blog">
-              Journal
-            </FooterLink>
+            <FooterLink href="/about">About Us</FooterLink>
+            <FooterLink href="/projects">Selected Projects</FooterLink>
+            <FooterLink href="/studio">The Studio</FooterLink>
+            <FooterLink href="/blog">Journal</FooterLink>
           </div>
 
-          {/* ==================================================
-              CONTACT
-          ================================================== */}
+          {/* CONTACT — single source of truth for every contact channel */}
 
-          <div className="flex flex-col gap-4">
-
+          <div className="flex flex-col gap-3">
             <h4
               className="
-                mb-2
+                mb-1
                 font-[family-name:var(--font-montserrat)]
                 text-xs
                 font-semibold
@@ -474,84 +409,57 @@ export default function Footer() {
               Contact
             </h4>
 
-            {/* Contact Person */}
-
-            <p
-              className="
-                font-[family-name:var(--font-montserrat)]
-                text-sm
-                font-semibold
-                text-[#e5dcc7]
-              "
-            >
+            <p className="font-[family-name:var(--font-montserrat)] text-sm font-semibold text-[#e5dcc7]">
               {contactPerson}
             </p>
 
-            {/* Phone */}
-
             <a
-              href={`tel:${contactPhone}`}
-              className="
-                font-[family-name:var(--font-montserrat)]
-                text-sm
-                font-medium
-                text-[#e5dcc7]/80
-                transition-colors
-                duration-300
-                hover:text-white
-              "
+              href={`tel:+${contactPhone}`}
+              className="inline-flex items-center gap-2 font-[family-name:var(--font-montserrat)] text-sm font-medium text-[#e5dcc7]/80 transition-colors duration-300 hover:text-white"
             >
+              <SocialIcon name="phone" className="h-3.5 w-3.5 shrink-0 text-[#8f9a9b]" />
               {contactPhoneDisplay}
             </a>
-
-            {/* WhatsApp */}
 
             <a
               href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="
-                font-[family-name:var(--font-montserrat)]
-                text-sm
-                font-medium
-                text-[#e5dcc7]/80
-                transition-colors
-                duration-300
-                hover:text-white
-              "
+              className="inline-flex items-center gap-2 font-[family-name:var(--font-montserrat)] text-sm font-medium text-[#e5dcc7]/80 transition-colors duration-300 hover:text-white"
             >
-              WhatsApp: {whatsappPhoneDisplay}
+              <SocialIcon name="whatsapp" className="h-3.5 w-3.5 shrink-0 text-[#25D366]" />
+              {whatsappPhoneDisplay}
             </a>
 
-            {/* Address */}
-
-            <p
-              className="
-                mt-2
-                max-w-xs
-                font-[family-name:var(--font-montserrat)]
-                text-sm
-                font-medium
-                leading-relaxed
-                text-[#e5dcc7]/80
-              "
+            <a
+              href={`mailto:${contactEmail}`}
+              className="inline-flex items-center gap-2 font-[family-name:var(--font-montserrat)] text-sm font-medium text-[#e5dcc7]/80 transition-colors duration-300 hover:text-white"
             >
-              {officeAddressLine1}
-              <br />
-              {officeAddressLine2}
-            </p>
+              <SocialIcon name="mail" className="h-3.5 w-3.5 shrink-0 text-[#8f9a9b]" />
+              {contactEmail}
+            </a>
 
+            <a
+              href={mapsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex items-start gap-2 font-[family-name:var(--font-montserrat)] text-sm font-medium leading-relaxed text-[#e5dcc7]/80 transition-colors duration-300 hover:text-white"
+            >
+              <SocialIcon name="pin" className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#8f9a9b]" />
+              <span>
+                {officeAddressLine1}
+                <br />
+                {officeAddressLine2}
+              </span>
+            </a>
           </div>
 
-          {/* ==================================================
-              SOCIAL
-          ================================================== */}
+          {/* SOCIAL — one compact list, icon + label, nothing repeated elsewhere */}
 
-          <div className="flex flex-col gap-4">
-
+          <div className="flex flex-col gap-3">
             <h4
               className="
-                mb-2
+                mb-1
                 font-[family-name:var(--font-montserrat)]
                 text-xs
                 font-semibold
@@ -563,99 +471,47 @@ export default function Footer() {
               Social
             </h4>
 
-            {/* Instagram */}
-
-            {instagramUrl ? (
-              <a
-                href={instagramUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="
-                  font-[family-name:var(--font-montserrat)]
-                  text-sm
-                  font-medium
-                  text-[#e5dcc7]/80
-                  transition-colors
-                  duration-300
-                  hover:text-white
-                "
-              >
-                Instagram
-              </a>
-            ) : null}
-
-            {/* Pinterest */}
-
-            {pinterestUrl ? (
-              <a
-                href={pinterestUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="
-                  font-[family-name:var(--font-montserrat)]
-                  text-sm
-                  font-medium
-                  text-[#e5dcc7]/80
-                  transition-colors
-                  duration-300
-                  hover:text-white
-                "
-              >
-                Pinterest
-              </a>
-            ) : null}
-
-            {/* LinkedIn */}
-
-            {linkedinUrl ? (
-              <a
-                href={linkedinUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="
-                  font-[family-name:var(--font-montserrat)]
-                  text-sm
-                  font-medium
-                  text-[#e5dcc7]/80
-                  transition-colors
-                  duration-300
-                  hover:text-white
-                "
-              >
-                LinkedIn
-              </a>
-            ) : null}
-
-            {/* If no social links have been added */}
-
-            {!instagramUrl &&
-            !pinterestUrl &&
-            !linkedinUrl ? (
-              <p
-                className="
-                  max-w-[180px]
-                  font-[family-name:var(--font-montserrat)]
-                  text-sm
-                  font-medium
-                  leading-relaxed
-                  text-[#8f9a9b]
-                "
-              >
-                Follow ASANG for project updates,
-                design stories and studio insights.
+            {socialLinks.length > 0 ? (
+              socialLinks.map((social) => (
+                <a
+                  key={social.name}
+                  href={social.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="
+                    group
+                    inline-flex
+                    items-center
+                    gap-2
+                    font-[family-name:var(--font-montserrat)]
+                    text-sm
+                    font-medium
+                    text-[#e5dcc7]/80
+                    transition-colors
+                    duration-300
+                    hover:text-white
+                  "
+                >
+                  <SocialIcon
+                    name={social.icon}
+                    className="h-3.5 w-3.5 shrink-0 text-[#8f9a9b] transition-colors duration-300 group-hover:text-[#c9b58a]"
+                  />
+                  {social.name}
+                </a>
+              ))
+            ) : (
+              <p className="max-w-[180px] font-[family-name:var(--font-montserrat)] text-sm font-medium leading-relaxed text-[#8f9a9b]">
+                Follow ASANG for project updates and studio insights.
               </p>
-            ) : null}
+            )}
           </div>
 
-          {/* ==================================================
-              LEGAL
-          ================================================== */}
+          {/* LEGAL */}
 
-          <div className="flex flex-col gap-4">
-
+          <div className="flex flex-col gap-3">
             <h4
               className="
-                mb-2
+                mb-1
                 font-[family-name:var(--font-montserrat)]
                 text-xs
                 font-semibold
@@ -667,111 +523,8 @@ export default function Footer() {
               Legal
             </h4>
 
-            <FooterLink href="/privacy">
-              Privacy Policy
-            </FooterLink>
-
-            <FooterLink href="/terms">
-              Terms of Service
-            </FooterLink>
-          </div>
-        </div>
-
-        {/* ==================================================
-            OFFICE ADDRESS STRIP
-        ================================================== */}
-
-        <div
-          className="
-            mb-10
-            border-y
-            border-[#8f9a9b]/20
-            py-7
-          "
-        >
-          <div
-            className="
-              flex
-              flex-col
-              gap-3
-              md:flex-row
-              md:items-center
-              md:justify-between
-            "
-          >
-            <div>
-
-              <p
-                className="
-                  font-[family-name:var(--font-montserrat)]
-                  text-[9px]
-                  font-semibold
-                  uppercase
-                  tracking-[0.3em]
-                  text-[#8f9a9b]
-                "
-              >
-                Studio Office
-              </p>
-
-              <p
-                className="
-                  mt-2
-                  font-[family-name:var(--font-montserrat)]
-                  text-sm
-                  font-medium
-                  leading-relaxed
-                  text-[#e5dcc7]/80
-                "
-              >
-                {officeAddressLine1}
-                <br className="sm:hidden" />{" "}
-                {officeAddressLine2}
-              </p>
-
-            </div>
-
-            <a
-              href="https://www.google.com/maps/search/?api=1&query=%23208%2C%20Vriksh%20Building%2C%20A-103%2C%20Sector%2063%2C%20NOIDA%20-%20201301%2C%20Uttar%20Pradesh%2C%20India"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="
-                flex
-                w-fit
-                items-center
-                gap-3
-                font-[family-name:var(--font-montserrat)]
-                text-xs
-                font-semibold
-                uppercase
-                tracking-[0.2em]
-                text-[#e5dcc7]/70
-                transition-colors
-                duration-300
-                hover:text-white
-              "
-            >
-              View Location
-
-              <svg
-                className="h-4 w-4"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-              >
-                <path
-                  d="M5 12h14"
-                  strokeLinecap="round"
-                />
-
-                <path
-                  d="m13 6 6 6-6 6"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </a>
+            <FooterLink href="/privacy">Privacy Policy</FooterLink>
+            <FooterLink href="/terms">Terms of Service</FooterLink>
           </div>
         </div>
 
@@ -786,6 +539,9 @@ export default function Footer() {
             items-center
             justify-between
             gap-3
+            border-t
+            border-[#8f9a9b]/15
+            pt-6
             font-[family-name:var(--font-montserrat)]
             text-xs
             font-medium
@@ -794,8 +550,7 @@ export default function Footer() {
           "
         >
           <p className="text-center md:text-left">
-            &copy; {new Date().getFullYear()} ASANG Design
-            Studio. All rights reserved.
+            &copy; {new Date().getFullYear()} ASANG Design Studio. All rights reserved.
           </p>
 
           <p className="tracking-[0.18em] uppercase">
