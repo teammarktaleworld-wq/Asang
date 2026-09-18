@@ -1,3 +1,9 @@
+
+
+
+
+
+
 "use client";
 
 import Image from "next/image";
@@ -333,11 +339,12 @@ export default function InsightsPage() {
               <span
                 className="
                   font-[family-name:var(--font-montserrat)]
-                  text-[9px]
-                  font-medium
+                  text-xs
+                  font-semibold
                   uppercase
                   tracking-[0.4em]
                   text-[#DCC9A8]
+                  md:text-sm
                 "
               >
                 ASANG JOURNAL
@@ -386,11 +393,11 @@ export default function InsightsPage() {
                 className="
                   max-w-xl
                   font-[family-name:var(--font-montserrat)]
-                  text-xs
-                  font-light
+                  text-sm
+                  font-medium
                   leading-[2]
-                  text-white/55
-                  md:text-sm
+                  text-white/80
+                  md:text-base
                 "
               >
                 A collection of thoughts, observations and
@@ -412,10 +419,11 @@ export default function InsightsPage() {
                 <span
                   className="
                     font-[family-name:var(--font-montserrat)]
-                    text-[8px]
+                    text-xs
+                    font-medium
                     uppercase
                     tracking-[0.25em]
-                    text-white/35
+                    text-white/60
                   "
                 >
                   Ideas in progress
@@ -431,10 +439,11 @@ export default function InsightsPage() {
           <span
             className="
               font-[family-name:var(--font-montserrat)]
-              text-[8px]
+              text-xs
+              font-semibold
               uppercase
               tracking-[0.35em]
-              text-white/25
+              text-white/60
             "
           >
             Design · Materials · Living
@@ -462,11 +471,12 @@ export default function InsightsPage() {
               <p
                 className="
                   font-[family-name:var(--font-montserrat)]
-                  text-[9px]
-                  font-medium
+                  text-xs
+                  font-semibold
                   uppercase
                   tracking-[0.35em]
                   text-[#8F9A9B]
+                  md:text-sm
                 "
               >
                 From The Studio
@@ -500,11 +510,11 @@ export default function InsightsPage() {
                   mt-8
                   max-w-2xl
                   font-[family-name:var(--font-montserrat)]
-                  text-xs
-                  font-light
+                  text-sm
+                  font-medium
                   leading-[2.1]
-                  text-[#777168]
-                  md:text-sm
+                  text-[#514d45]
+                  md:text-base
                 "
               >
                 It is how a space makes us feel, how easily
@@ -543,11 +553,12 @@ export default function InsightsPage() {
               <span
                 className="
                   font-[family-name:var(--font-montserrat)]
-                  text-[9px]
-                  font-medium
+                  text-xs
+                  font-semibold
                   uppercase
                   tracking-[0.35em]
                   text-[#777168]
+                  md:text-sm
                 "
               >
                 Featured Insight
@@ -586,10 +597,11 @@ export default function InsightsPage() {
                   <span
                     className="
                       font-[family-name:var(--font-montserrat)]
-                      text-[8px]
+                      text-xs
+                      font-semibold
                       uppercase
                       tracking-[0.3em]
-                      text-white/60
+                      text-white/90
                     "
                   >
                     {featured.category}
@@ -615,10 +627,11 @@ export default function InsightsPage() {
                     <span
                       className="
                         font-[family-name:var(--font-montserrat)]
-                        text-[7px]
+                        text-xs
+                        font-medium
                         uppercase
                         tracking-[0.25em]
-                        text-white/30
+                        text-white/60
                       "
                     >
                       {featured.date}
@@ -645,10 +658,11 @@ export default function InsightsPage() {
                       mt-7
                       max-w-lg
                       font-[family-name:var(--font-montserrat)]
-                      text-xs
+                      text-sm
                       font-light
                       leading-[2]
-                      text-white/45
+                      text-white/70
+                      md:text-base
                     "
                   >
                     {featured.excerpt}
@@ -662,10 +676,11 @@ export default function InsightsPage() {
                     <span
                       className="
                         font-[family-name:var(--font-montserrat)]
-                        text-[8px]
+                        text-xs
+                        font-medium
                         uppercase
                         tracking-[0.25em]
-                        text-white/35
+                        text-white/60
                       "
                     >
                       {featured.readTime}
@@ -681,7 +696,7 @@ export default function InsightsPage() {
                       gap-4
                       rounded-full
                       border
-                      border-white/25
+                      border-white/40
                       px-5
                       py-3
                       text-white
@@ -695,8 +710,8 @@ export default function InsightsPage() {
                     <span
                       className="
                         font-[family-name:var(--font-montserrat)]
-                        text-[8px]
-                        font-medium
+                        text-xs
+                        font-semibold
                         uppercase
                         tracking-[0.25em]
                       "
@@ -747,11 +762,12 @@ export default function InsightsPage() {
               <p
                 className="
                   font-[family-name:var(--font-montserrat)]
-                  text-[9px]
-                  font-medium
+                  text-xs
+                  font-semibold
                   uppercase
                   tracking-[0.35em]
                   text-[#8F9A9B]
+                  md:text-sm
                 "
               >
                 Explore Topics
@@ -770,7 +786,7 @@ export default function InsightsPage() {
               </h2>
             </div>
 
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-3">
               {categories.map((category) => {
                 const isActive = activeCategory === category;
 
@@ -782,10 +798,11 @@ export default function InsightsPage() {
                     className={`
                       rounded-full
                       border
-                      px-4
+                      px-5
                       py-2.5
                       font-[family-name:var(--font-montserrat)]
-                      text-[8px]
+                      text-xs
+                      font-semibold
                       uppercase
                       tracking-[0.15em]
                       transition-all
@@ -793,7 +810,7 @@ export default function InsightsPage() {
                       ${
                         isActive
                           ? "border-[#231F20] bg-[#231F20] text-white"
-                          : "border-[#231F20]/15 text-[#777168] hover:border-[#231F20]/40"
+                          : "border-[#231F20]/20 text-[#514d45] hover:border-[#231F20]/50"
                       }
                     `}
                   >
@@ -881,12 +898,13 @@ export default function InsightsPage() {
                         className="
                           rounded-full
                           border
-                          border-white/30
-                          bg-black/10
+                          border-white/40
+                          bg-black/20
                           px-3
                           py-1.5
                           font-[family-name:var(--font-montserrat)]
-                          text-[7px]
+                          text-xs
+                          font-semibold
                           uppercase
                           tracking-[0.2em]
                           text-white
@@ -912,8 +930,8 @@ export default function InsightsPage() {
                         justify-center
                         rounded-full
                         border
-                        border-white/30
-                        bg-black/10
+                        border-white/40
+                        bg-black/20
                         opacity-0
                         backdrop-blur-md
                         transition-all
@@ -950,7 +968,8 @@ export default function InsightsPage() {
                       <span
                         className="
                           font-[family-name:var(--font-montserrat)]
-                          text-[7px]
+                          text-xs
+                          font-medium
                           uppercase
                           tracking-[0.2em]
                           text-[#8F9A9B]
@@ -962,7 +981,8 @@ export default function InsightsPage() {
                       <span
                         className="
                           font-[family-name:var(--font-montserrat)]
-                          text-[7px]
+                          text-xs
+                          font-medium
                           uppercase
                           tracking-[0.15em]
                           text-[#8F9A9B]
@@ -992,26 +1012,26 @@ export default function InsightsPage() {
                       className="
                         mt-4
                         font-[family-name:var(--font-montserrat)]
-                        text-[10px]
-                        font-light
+                        text-sm
+                        font-medium
                         leading-[1.9]
-                        text-[#777168]
+                        text-[#514d45]
                       "
                     >
                       {insight.excerpt}
                     </p>
 
                     <div className="mt-6 flex items-center gap-3">
-                      <span className="h-px w-7 bg-[#231F20]/20 transition-all duration-500 group-hover:w-12 group-hover:bg-[#231F20]/50" />
+                      <span className="h-px w-7 bg-[#231F20]/30 transition-all duration-500 group-hover:w-12 group-hover:bg-[#231F20]/60" />
 
                       <span
                         className="
                           font-[family-name:var(--font-montserrat)]
-                          text-[7px]
-                          font-medium
+                          text-xs
+                          font-semibold
                           uppercase
                           tracking-[0.2em]
-                          text-[#777168]
+                          text-[#514d45]
                         "
                       >
                         Read More
@@ -1085,10 +1105,11 @@ export default function InsightsPage() {
                 <span
                   className="
                     font-[family-name:var(--font-montserrat)]
-                    text-[8px]
+                    text-xs
+                    font-semibold
                     uppercase
                     tracking-[0.3em]
-                    text-white/60
+                    text-white/90
                   "
                 >
                   Material Study
@@ -1111,11 +1132,12 @@ export default function InsightsPage() {
                 variants={fadeUp}
                 className="
                   font-[family-name:var(--font-montserrat)]
-                  text-[9px]
-                  font-medium
+                  text-xs
+                  font-semibold
                   uppercase
                   tracking-[0.35em]
                   text-[#DCC9A8]
+                  md:text-sm
                 "
               >
                 A Thought From ASANG
@@ -1147,11 +1169,11 @@ export default function InsightsPage() {
                   mt-9
                   max-w-xl
                   font-[family-name:var(--font-montserrat)]
-                  text-xs
-                  font-light
+                  text-sm
+                  font-medium
                   leading-[2]
-                  text-white/45
-                  md:text-sm
+                  text-white/70
+                  md:text-base
                 "
               >
                 A handle, a shadow gap, the edge of a stone
@@ -1169,10 +1191,11 @@ export default function InsightsPage() {
                 <span
                   className="
                     font-[family-name:var(--font-montserrat)]
-                    text-[8px]
+                    text-xs
+                    font-semibold
                     uppercase
                     tracking-[0.25em]
-                    text-white/35
+                    text-white/60
                   "
                 >
                   Detail creates character
@@ -1205,11 +1228,12 @@ export default function InsightsPage() {
               <p
                 className="
                   font-[family-name:var(--font-montserrat)]
-                  text-[9px]
-                  font-medium
+                  text-xs
+                  font-semibold
                   uppercase
                   tracking-[0.35em]
                   text-[#8F9A9B]
+                  md:text-sm
                 "
               >
                 Keep Exploring
@@ -1234,7 +1258,7 @@ export default function InsightsPage() {
               </h2>
             </motion.div>
 
-            <div className="mt-16 grid border-t border-[#231F20]/15 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="mt-16 grid border-t border-[#231F20]/20 sm:grid-cols-2 lg:grid-cols-4">
               <JournalCategory
                 number="01"
                 title="Design"
@@ -1293,11 +1317,12 @@ export default function InsightsPage() {
                 className="
                   mb-6
                   font-[family-name:var(--font-montserrat)]
-                  text-[9px]
-                  font-medium
+                  text-xs
+                  font-semibold
                   uppercase
                   tracking-[0.35em]
                   text-[#6C665D]
+                  md:text-sm
                 "
               >
                 Have An Idea?
@@ -1328,11 +1353,11 @@ export default function InsightsPage() {
                   mt-8
                   max-w-lg
                   font-[family-name:var(--font-montserrat)]
-                  text-xs
-                  font-light
+                  text-sm
+                  font-medium
                   leading-[2]
-                  text-[#5F5951]
-                  md:text-sm
+                  text-[#4b453e]
+                  md:text-base
                 "
               >
                 Inspired by something you've read? Tell us
@@ -1363,10 +1388,11 @@ export default function InsightsPage() {
               <span
                 className="
                   font-[family-name:var(--font-montserrat)]
-                  text-[9px]
-                  font-medium
+                  text-xs
+                  font-semibold
                   uppercase
                   tracking-[0.25em]
+                  sm:text-sm
                 "
               >
                 Start a Project
@@ -1423,7 +1449,7 @@ function JournalCategory({
       className="
         group
         border-b
-        border-[#231F20]/15
+        border-[#231F20]/20
         px-0
         py-9
         sm:px-6
@@ -1439,7 +1465,8 @@ function JournalCategory({
         <span
           className="
             font-[family-name:var(--font-montserrat)]
-            text-[8px]
+            text-xs
+            font-semibold
             tracking-[0.2em]
             text-[#8F9A9B]
           "
@@ -1447,7 +1474,7 @@ function JournalCategory({
           {number}
         </span>
 
-        <span className="h-px w-6 bg-[#231F20]/15 transition-all duration-500 group-hover:w-10 group-hover:bg-[#231F20]/40" />
+        <span className="h-px w-6 bg-[#231F20]/20 transition-all duration-500 group-hover:w-10 group-hover:bg-[#231F20]/60" />
       </div>
 
       <h3
@@ -1467,10 +1494,10 @@ function JournalCategory({
           mt-4
           max-w-xs
           font-[family-name:var(--font-montserrat)]
-          text-[9px]
-          font-light
+          text-sm
+          font-medium
           leading-[1.9]
-          text-[#777168]
+          text-[#514d45]
         "
       >
         {text}

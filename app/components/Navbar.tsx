@@ -1,12 +1,6 @@
-
-
-
-
-
-
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -24,26 +18,26 @@ export default function Navbar() {
     { name: "Services", href: "/services" },
     { name: "Insights", href: "/insights" },
     { name: "About", href: "/about" },
+    { name: "Careers", href: "/careers" },
     { name: "Contact", href: "/contact" },
   ];
+
+  /* =========================================================
+     SCROLL HANDLER
+     ========================================================= */
 
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
 
-      // Transparent at top of hero
-      // White navbar after scrolling
       setIsScrolled(currentScrollY > 20);
 
-      // Always show navbar near the top
       if (currentScrollY < 80) {
         setIsVisible(true);
       } else if (currentScrollY > lastScrollY.current + 8) {
-        // Hide while scrolling down
         setIsVisible(false);
         setIsMobileMenuOpen(false);
       } else if (currentScrollY < lastScrollY.current - 8) {
-        // Show while scrolling up
         setIsVisible(true);
       }
 
@@ -59,9 +53,30 @@ export default function Navbar() {
     };
   }, []);
 
-  // Navigation text:
-  // White over hero
-  // Black after scrolling
+  /* =========================================================
+     CLOSE MOBILE MENU WHEN ROUTE CHANGES
+     ========================================================= */
+
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [pathname]);
+
+  /* =========================================================
+     PREVENT BODY SCROLL WHEN MOBILE MENU IS OPEN
+     ========================================================= */
+
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isMobileMenuOpen]);
+
   const textColor = isScrolled ? "#111111" : "#ffffff";
 
   return (
@@ -71,13 +86,9 @@ export default function Navbar() {
         top: 0,
         left: 0,
         right: 0,
-
         zIndex: 100,
 
-        transform: isVisible
-          ? "translateY(0)"
-          : "translateY(-110%)",
-
+        transform: isVisible ? "translateY(0)" : "translateY(-110%)",
         opacity: isVisible ? 1 : 0,
 
         transition:
@@ -91,6 +102,7 @@ export default function Navbar() {
           ===================================================== */}
 
       <nav
+        aria-label="Main navigation"
         style={{
           position: "relative",
 
@@ -100,22 +112,14 @@ export default function Navbar() {
 
           width: "100%",
 
-          padding: isScrolled
-            ? "12px 32px"
-            : "18px 38px",
+          padding: isScrolled ? "12px 32px" : "18px 38px",
 
-          // Transparent over hero
           background: isScrolled
             ? "rgba(255, 255, 255, 0.94)"
             : "transparent",
 
-          backdropFilter: isScrolled
-            ? "blur(18px)"
-            : "none",
-
-          WebkitBackdropFilter: isScrolled
-            ? "blur(18px)"
-            : "none",
+          backdropFilter: isScrolled ? "blur(18px)" : "none",
+          WebkitBackdropFilter: isScrolled ? "blur(18px)" : "none",
 
           boxShadow: isScrolled
             ? "0 2px 24px rgba(0, 0, 0, 0.08)"
@@ -126,7 +130,9 @@ export default function Navbar() {
             : "1px solid transparent",
 
           transition:
-            "padding 0.4s ease, background 0.4s ease, box-shadow 0.4s ease, border 0.4s ease",
+            "padding 0.4s ease, background 0.4s ease, box-shadow 0.4s ease, border-bottom 0.4s ease",
+
+          minHeight: isScrolled ? "72px" : "84px",
         }}
       >
         {/* =====================================================
@@ -135,12 +141,12 @@ export default function Navbar() {
 
         <Link
           href="/"
-          className="logo-link"
+          className="asang-logo-link"
+          aria-label="ASANG Design Studio home"
           style={{
             display: "flex",
             alignItems: "center",
             flexShrink: 0,
-
             position: "relative",
             zIndex: 10,
           }}
@@ -153,13 +159,11 @@ export default function Navbar() {
             priority
             className="asang-logo"
             style={{
-              objectFit: "contain",
               width: "auto",
-              height: isScrolled
-                ? "48px"
-                : "60px",
-              filter: "none",
+              height: isScrolled ? "48px" : "60px",
+              objectFit: "contain",
               transition: "height 0.4s ease",
+              display: "block",
             }}
           />
         </Link>
@@ -169,27 +173,26 @@ export default function Navbar() {
             ===================================================== */}
 
         <ul
-          className="desktop-nav"
+          className="asang-desktop-nav"
           style={{
             display: "none",
 
             position: "absolute",
             left: "50%",
-
             transform: "translateX(-50%)",
 
             listStyle: "none",
-
             margin: 0,
             padding: 0,
 
             gap: "40px",
-
             alignItems: "center",
           }}
         >
           {navLinks.map((link) => {
-            const isActive = pathname === link.href;
+            const isActive =
+              pathname === link.href ||
+              pathname.startsWith(`${link.href}/`);
 
             return (
               <li
@@ -200,36 +203,32 @@ export default function Navbar() {
               >
                 <Link
                   href={link.href}
-                  className="nav-link"
+                  className="asang-nav-link"
+                  aria-current={isActive ? "page" : undefined}
                   style={{
                     position: "relative",
 
                     display: "inline-block",
 
                     fontSize: "11px",
-
                     letterSpacing: "0.18em",
-
                     fontWeight: 500,
 
                     textTransform: "uppercase",
 
                     color: textColor,
-
                     textDecoration: "none",
 
                     paddingBottom: "6px",
 
-                    transition:
-                      "color 0.3s ease, opacity 0.3s ease",
+                    transition: "color 0.3s ease, opacity 0.3s ease",
                   }}
                 >
                   {link.name}
 
-                  {/* Underline */}
-
                   <span
-                    className="nav-underline"
+                    aria-hidden="true"
+                    className="asang-nav-underline"
                     style={{
                       position: "absolute",
 
@@ -243,9 +242,7 @@ export default function Navbar() {
 
                       transformOrigin: "left",
 
-                      transform: isActive
-                        ? "scaleX(1)"
-                        : "scaleX(0)",
+                      transform: isActive ? "scaleX(1)" : "scaleX(0)",
 
                       transition:
                         "transform 0.3s ease, background 0.3s ease",
@@ -262,10 +259,9 @@ export default function Navbar() {
             ===================================================== */}
 
         <div
-          className="desktop-cta"
+          className="asang-desktop-cta"
           style={{
             display: "none",
-
             flexShrink: 0,
 
             position: "relative",
@@ -274,7 +270,7 @@ export default function Navbar() {
         >
           <Link
             href="/contact"
-            className="cta-btn"
+            className="asang-cta-btn"
             style={{
               display: "inline-flex",
 
@@ -286,9 +282,7 @@ export default function Navbar() {
               padding: "10px 25px",
 
               fontSize: "11px",
-
               letterSpacing: "0.14em",
-
               fontWeight: 600,
 
               textTransform: "uppercase",
@@ -307,13 +301,8 @@ export default function Navbar() {
 
               textDecoration: "none",
 
-              backdropFilter: isScrolled
-                ? "none"
-                : "blur(8px)",
-
-              WebkitBackdropFilter: isScrolled
-                ? "none"
-                : "blur(8px)",
+              backdropFilter: isScrolled ? "none" : "blur(8px)",
+              WebkitBackdropFilter: isScrolled ? "none" : "blur(8px)",
 
               transition: "all 0.3s ease",
             }}
@@ -327,39 +316,34 @@ export default function Navbar() {
             ===================================================== */}
 
         <button
-          onClick={() =>
-            setIsMobileMenuOpen(
-              !isMobileMenuOpen
-            )
-          }
-          aria-label="Toggle menu"
+          type="button"
+          onClick={() => setIsMobileMenuOpen((previous) => !previous)}
+          aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
           aria-expanded={isMobileMenuOpen}
-          className="mobile-toggle"
+          className="asang-mobile-toggle"
           style={{
             display: "flex",
 
             flexDirection: "column",
-
             gap: "5px",
 
             alignItems: "flex-end",
             justifyContent: "center",
 
             background: "none",
-
             border: "none",
 
             cursor: "pointer",
 
-            padding: "5px",
-
+            padding: "8px",
             marginLeft: "auto",
 
             zIndex: 60,
+
+            WebkitTapHighlightColor: "transparent",
           }}
         >
           {/* First line */}
-
           <span
             style={{
               display: "block",
@@ -381,7 +365,6 @@ export default function Navbar() {
           />
 
           {/* Second line */}
-
           <span
             style={{
               display: "block",
@@ -394,14 +377,11 @@ export default function Navbar() {
               transition:
                 "opacity 0.3s ease, width 0.3s ease",
 
-              opacity: isMobileMenuOpen
-                ? 0
-                : 1,
+              opacity: isMobileMenuOpen ? 0 : 1,
             }}
           />
 
           {/* Third line */}
-
           <span
             style={{
               display: "block",
@@ -429,34 +409,26 @@ export default function Navbar() {
           ===================================================== */}
 
       <div
+        className="asang-mobile-menu"
         style={{
           position: "absolute",
 
           top: "100%",
-
           left: 0,
           right: 0,
 
-          background:
-            "rgba(255,255,255,0.97)",
+          background: "rgba(255,255,255,0.97)",
 
           backdropFilter: "blur(20px)",
+          WebkitBackdropFilter: "blur(20px)",
 
-          WebkitBackdropFilter:
-            "blur(20px)",
-
-          borderBottom:
-            "1px solid rgba(0,0,0,0.06)",
+          borderBottom: "1px solid rgba(0,0,0,0.06)",
 
           overflow: "hidden",
 
-          maxHeight: isMobileMenuOpen
-            ? "500px"
-            : "0px",
+          maxHeight: isMobileMenuOpen ? "600px" : "0px",
 
-          opacity: isMobileMenuOpen
-            ? 1
-            : 0,
+          opacity: isMobileMenuOpen ? 1 : 0,
 
           transform: isMobileMenuOpen
             ? "translateY(0)"
@@ -465,98 +437,118 @@ export default function Navbar() {
           transition:
             "max-height 0.4s cubic-bezier(0.4,0,0.2,1), opacity 0.3s ease, transform 0.35s ease",
 
-          pointerEvents:
-            isMobileMenuOpen
-              ? "auto"
-              : "none",
+          pointerEvents: isMobileMenuOpen ? "auto" : "none",
         }}
       >
         <div
           style={{
             display: "flex",
-
             flexDirection: "column",
-
             alignItems: "center",
 
             gap: 0,
 
-            padding:
-              "8px 24px 25px",
+            padding: "8px 20px 28px",
+
+            width: "100%",
           }}
         >
-          {/* Mobile Links */}
+          {/* =================================================
+              MOBILE LINKS
+              ================================================= */}
 
           {navLinks.map((link, index) => {
             const isActive =
-              pathname === link.href;
+              pathname === link.href ||
+              pathname.startsWith(`${link.href}/`);
 
             return (
               <Link
                 key={link.name}
                 href={link.href}
-                onClick={() =>
-                  setIsMobileMenuOpen(false)
-                }
+                onClick={() => setIsMobileMenuOpen(false)}
+                aria-current={isActive ? "page" : undefined}
+                className="asang-mobile-nav-link"
                 style={{
-                  display: "block",
+                  display: "flex",
+
+                  alignItems: "center",
+                  justifyContent: "space-between",
 
                   width: "100%",
+                  maxWidth: "520px",
 
                   textAlign: "center",
 
-                  padding: "15px 0",
+                  padding: "17px 4px",
 
                   fontSize: "11px",
-
                   letterSpacing: "0.2em",
-
                   fontWeight: 500,
 
                   textTransform: "uppercase",
 
-                  color: isActive
-                    ? "#000000"
-                    : "#666666",
+                  color: isActive ? "#000000" : "#666666",
 
                   textDecoration: "none",
 
                   borderBottom:
-                    index <
-                      navLinks.length - 1
+                    index < navLinks.length - 1
                       ? "1px solid rgba(0,0,0,0.06)"
                       : "none",
 
                   transition:
-                    "color 0.2s ease",
+                    "color 0.2s ease, padding 0.2s ease",
+
+                  WebkitTapHighlightColor: "transparent",
                 }}
               >
-                {link.name}
+                <span>{link.name}</span>
+
+                <span
+                  aria-hidden="true"
+                  style={{
+                    width: "5px",
+                    height: "5px",
+
+                    borderRadius: "50%",
+
+                    background: isActive
+                      ? "#111111"
+                      : "transparent",
+
+                    border: isActive
+                      ? "none"
+                      : "1px solid rgba(0,0,0,0.2)",
+                  }}
+                />
               </Link>
             );
           })}
 
-          {/* Mobile Contact */}
+          {/* =================================================
+              MOBILE CONTACT
+              ================================================= */}
 
           <Link
             href="/contact"
-            onClick={() =>
-              setIsMobileMenuOpen(false)
-            }
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="asang-mobile-contact"
             style={{
               display: "inline-flex",
 
               alignItems: "center",
               justifyContent: "center",
 
+              width: "100%",
+              maxWidth: "520px",
+
               marginTop: "20px",
 
-              padding: "12px 32px",
+              padding: "14px 30px",
 
               fontSize: "11px",
-
               letterSpacing: "0.14em",
-
               fontWeight: 600,
 
               textTransform: "uppercase",
@@ -568,6 +560,11 @@ export default function Navbar() {
               borderRadius: "100px",
 
               textDecoration: "none",
+
+              transition:
+                "transform 0.2s ease, background 0.2s ease",
+
+              WebkitTapHighlightColor: "transparent",
             }}
           >
             Contact Us
@@ -576,63 +573,136 @@ export default function Navbar() {
       </div>
 
       {/* =====================================================
-          RESPONSIVE STYLES
+          RESPONSIVE CSS
           ===================================================== */}
 
       <style>{`
+        /* ==================================================
+           DESKTOP
+           ================================================== */
+
         @media (min-width: 768px) {
-          .desktop-nav {
+          .asang-desktop-nav {
             display: flex !important;
           }
 
-          .desktop-cta {
+          .asang-desktop-cta {
             display: block !important;
           }
 
-          .mobile-toggle {
+          .asang-mobile-toggle {
+            display: none !important;
+          }
+
+          .asang-mobile-menu {
             display: none !important;
           }
         }
 
-        .nav-link:hover {
+        /* ==================================================
+           DESKTOP HOVER
+           ================================================== */
+
+        .asang-nav-link:hover {
           opacity: 0.7;
         }
 
-        .nav-link:hover .nav-underline {
+        .asang-nav-link:hover .asang-nav-underline {
           transform: scaleX(1) !important;
         }
 
-        .cta-btn:hover {
-          background: ${isScrolled
-          ? "#333333"
-          : "rgba(0,0,0,0.38)"
-        } !important;
-
-          border-color: ${isScrolled
-          ? "#333333"
-          : "rgba(255,255,255,0.85)"
-        } !important;
-
+        .asang-cta-btn:hover {
           transform: translateY(-1px);
-
-          box-shadow: ${isScrolled
-          ? "0 4px 16px rgba(0,0,0,0.18)"
-          : "0 4px 20px rgba(0,0,0,0.25)"
-        } !important;
         }
 
-        .logo-link {
+        /* ==================================================
+           LOGO
+           ================================================== */
+
+        .asang-logo-link {
           transition: opacity 0.3s ease;
         }
 
-        .logo-link:hover {
+        .asang-logo-link:hover {
           opacity: 0.85;
         }
 
+        /* ==================================================
+           MOBILE
+           ================================================== */
+
+        .asang-mobile-nav-link:hover {
+          color: #111111 !important;
+        }
+
+        .asang-mobile-nav-link:active {
+          background: rgba(0,0,0,0.025);
+        }
+
+        .asang-mobile-contact:hover {
+          background: #222222 !important;
+          transform: translateY(-1px);
+        }
+
+        .asang-mobile-contact:active {
+          transform: scale(0.98);
+        }
+
+        /* ==================================================
+           TABLET / MOBILE LOGO
+           ================================================== */
+
         @media (max-width: 767px) {
-          nav {
-            padding-left: 20px !important;
-            padding-right: 20px !important;
+          .asang-logo {
+            height: 52px !important;
+            width: auto !important;
+            max-width: 150px;
+          }
+        }
+
+        /* ==================================================
+           SMALL MOBILE
+           ================================================== */
+
+        @media (max-width: 380px) {
+          .asang-logo {
+            height: 48px !important;
+            width: auto !important;
+            max-width: 135px;
+          }
+
+          .asang-mobile-menu {
+            max-height: ${isMobileMenuOpen ? "650px" : "0px"};
+          }
+        }
+
+        /* ==================================================
+           SAFE AREA
+           ================================================== */
+
+        @supports (padding: env(safe-area-inset-top)) {
+          @media (max-width: 767px) {
+            .asang-logo {
+              margin-top: max(
+                0px,
+                env(safe-area-inset-top)
+              );
+            }
+          }
+        }
+
+        /* ==================================================
+           REDUCED MOTION
+           ================================================== */
+
+        @media (prefers-reduced-motion: reduce) {
+          .asang-nav-link,
+          .asang-cta-btn,
+          .asang-mobile-nav-link,
+          .asang-mobile-contact,
+          .asang-logo-link,
+          .asang-mobile-menu {
+            transition: none !important;
           }
         }
       `}</style>

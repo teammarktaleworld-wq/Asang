@@ -1,143 +1,3 @@
-// 'use client';
-
-// import { useState } from 'react';
-// import { motion, AnimatePresence } from 'framer-motion';
-
-// const testimonials = [
-//   {
-//     id: 1,
-//     quote: "The studio transformed our space into a true sanctuary. Their attention to material details and spatial flow is completely unmatched.",
-//     author: "Elena Rodriguez",
-//     project: "Villa Nova Residency"
-//   },
-//   {
-//     id: 2,
-//     quote: "A seamless collaborative experience. They captured our exact vision for a minimalist yet incredibly warm and inviting environment.",
-//     author: "James Harrington",
-//     project: "Urban Loft Renovation"
-//   },
-//   {
-//     id: 3,
-//     quote: "A masterclass in balancing aesthetics and functionality. Every corner of our new home feels curated, intentional, and deeply personal.",
-//     author: "Sophia Chen",
-//     project: "Lakeside Estate"
-//   }
-// ];
-
-// export default function Testimonials() {
-//   const [currentIndex, setCurrentIndex] = useState(0);
-
-//   const handleNext = () => {
-//     setCurrentIndex((prevIndex) => (prevIndex === testimonials.length - 1 ? 0 : prevIndex + 1));
-//   };
-
-//   const handlePrev = () => {
-//     setCurrentIndex((prevIndex) => (prevIndex === 0 ? testimonials.length - 1 : prevIndex - 1));
-//   };
-
-//   return (
-//     <section className="bg-[#e5dcc7] text-gray-900 py-32 px-8 md:px-24 overflow-hidden">
-//       <div className="max-w-4xl mx-auto flex flex-col items-center text-center">
-        
-//         {/* Section Header */}
-//         <motion.p 
-//           initial={{ opacity: 0, y: 20 }}
-//           whileInView={{ opacity: 1, y: 0 }}
-//           viewport={{ once: true }}
-//           className="text-xs tracking-[0.2em] uppercase mb-12 font-medium text-gray-600"
-//         >
-//           Client Voices
-//         </motion.p>
-
-//         {/* Carousel Container */}
-//         <div className="relative w-full min-h-[250px] md:min-h-[200px] flex items-center justify-center">
-//           <AnimatePresence mode="wait">
-//             <motion.div
-//               key={currentIndex}
-//               initial={{ opacity: 0, x: 20 }}
-//               animate={{ opacity: 1, x: 0 }}
-//               exit={{ opacity: 0, x: -20 }}
-//               transition={{ duration: 0.5, ease: "easeInOut" }}
-//               className="absolute w-full px-4"
-//             >
-//               <h3 className="text-2xl md:text-4xl font-serif leading-relaxed mb-8 text-gray-800">
-//                 "{testimonials[currentIndex].quote}"
-//               </h3>
-//               <div className="flex flex-col items-center gap-1">
-//                 <p className="font-serif text-lg">{testimonials[currentIndex].author}</p>
-//                 <p className="text-xs tracking-widest uppercase text-gray-500">
-//                   {testimonials[currentIndex].project}
-//                 </p>
-//               </div>
-//             </motion.div>
-//           </AnimatePresence>
-//         </div>
-
-//         {/* Navigation Controls */}
-//         <motion.div 
-//           initial={{ opacity: 0 }}
-//           whileInView={{ opacity: 1 }}
-//           viewport={{ once: true }}
-//           transition={{ delay: 0.3 }}
-//           className="flex items-center gap-8 mt-12"
-//         >
-//           <button 
-//             onClick={handlePrev}
-//             className="w-12 h-12 rounded-full border border-gray-400 flex items-center justify-center text-gray-600 hover:bg-gray-900 hover:text-white hover:border-gray-900 transition-all duration-300"
-//             aria-label="Previous Testimonial"
-//           >
-//             {/* Minimalist Left Arrow SVG */}
-//             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-//               <path d="M19 12H5M5 12L12 19M5 12L12 5" />
-//             </svg>
-//           </button>
-          
-//           {/* Dot Indicators */}
-//           <div className="flex gap-3">
-//             {testimonials.map((_, idx) => (
-//               <button
-//                 key={idx}
-//                 onClick={() => setCurrentIndex(idx)}
-//                 className={`w-2 h-2 rounded-full transition-all duration-300 ${
-//                   idx === currentIndex ? 'bg-gray-900 w-6' : 'bg-gray-400'
-//                 }`}
-//                 aria-label={`Go to testimonial ${idx + 1}`}
-//               />
-//             ))}
-//           </div>
-
-//           <button 
-//             onClick={handleNext}
-//             className="w-12 h-12 rounded-full border border-gray-400 flex items-center justify-center text-gray-600 hover:bg-gray-900 hover:text-white hover:border-gray-900 transition-all duration-300"
-//             aria-label="Next Testimonial"
-//           >
-//             {/* Minimalist Right Arrow SVG */}
-//             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-//               <path d="M5 12H19M19 12L12 5M19 12L12 19" />
-//             </svg>
-//           </button>
-//         </motion.div>
-
-//       </div>
-//     </section>
-//   );
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 "use client";
 
 import { useState, useEffect } from "react";
@@ -285,7 +145,7 @@ export default function Testimonials() {
           w-[400px]
           rounded-full
           border
-          border-[#8f9a9b]/10
+          border-[#8f9a9b]/20
         "
       />
 
@@ -299,7 +159,7 @@ export default function Testimonials() {
           w-[280px]
           rounded-full
           border
-          border-[#8f9a9b]/10
+          border-[#8f9a9b]/20
         "
       />
 
@@ -313,7 +173,7 @@ export default function Testimonials() {
           w-[400px]
           rounded-full
           border
-          border-[#8f9a9b]/10
+          border-[#8f9a9b]/20
         "
       />
 
@@ -348,22 +208,23 @@ export default function Testimonials() {
           {/* Small Label */}
 
           <div className="mb-5 flex items-center justify-center gap-4">
-            <span className="h-px w-10 bg-[#8f9a9b]" />
+            <span className="h-px w-10 bg-[#5f5a52]" />
 
             <p
               className="
                 font-[family-name:var(--font-montserrat)]
-                text-[9px]
-                font-medium
+                text-xs
+                font-semibold
                 uppercase
                 tracking-[0.3em]
-                text-[#666158]
+                text-[#3e3934]
+                md:text-sm
               "
             >
               Client Voices
             </p>
 
-            <span className="h-px w-10 bg-[#8f9a9b]" />
+            <span className="h-px w-10 bg-[#5f5a52]" />
           </div>
 
           {/* Heading */}
@@ -384,7 +245,7 @@ export default function Testimonials() {
             Stories Behind
             <br />
 
-            <span className="italic text-[#6f7f80]">
+            <span className="italic text-[#5f5a52]">
               the Spaces.
             </span>
           </h2>
@@ -397,13 +258,13 @@ export default function Testimonials() {
               mt-6
               max-w-xl
               font-[family-name:var(--font-montserrat)]
-              text-xs
-              font-light
-              leading-[1.9]
+              text-sm
+              font-medium
+              leading-[1.8]
               tracking-[0.04em]
-              text-[#6d685f]
+              text-[#3e3934]
 
-              md:text-sm
+              md:text-base
             "
           >
             Every space has a story. Here are a few words
@@ -438,8 +299,8 @@ export default function Testimonials() {
             max-w-5xl
             overflow-hidden
             border
-            border-[#8f9a9b]/30
-            bg-[#eee7d8]/50
+            border-[#8f9a9b]/40
+            bg-[#eee7d8]/60
           "
         >
           {/* =================================================
@@ -471,7 +332,7 @@ export default function Testimonials() {
               font-[family-name:var(--font-cormorant)]
               text-8xl
               leading-none
-              text-[#c9b58a]/30
+              text-[#c9b58a]/40
 
               md:left-10
               md:top-7
@@ -489,16 +350,16 @@ export default function Testimonials() {
             className="
               relative
               flex
-              min-h-[430px]
+              min-h-[460px]
               items-center
               justify-center
               px-8
-              py-20
+              py-24
 
-              sm:min-h-[400px]
+              sm:min-h-[420px]
               sm:px-12
 
-              md:min-h-[390px]
+              md:min-h-[400px]
               md:px-20
             "
           >
@@ -531,9 +392,9 @@ export default function Testimonials() {
                     max-w-4xl
                     font-[family-name:var(--font-cormorant)]
                     text-2xl
-                    font-medium
-                    leading-[1.4]
-                    text-[#332f2a]
+                    font-semibold
+                    leading-[1.5]
+                    text-[#231f20]
 
                     sm:text-3xl
 
@@ -549,7 +410,7 @@ export default function Testimonials() {
                     AUTHOR
                     ================================================= */}
 
-                <div className="mt-9 flex flex-col items-center">
+                <div className="mt-10 flex flex-col items-center">
                   {/* Small divider */}
 
                   <div
@@ -564,9 +425,10 @@ export default function Testimonials() {
                   <p
                     className="
                       font-[family-name:var(--font-cormorant)]
-                      text-xl
-                      font-medium
+                      text-2xl
+                      font-bold
                       text-[#231f20]
+                      md:text-3xl
                     "
                   >
                     {testimonials[currentIndex].author}
@@ -576,11 +438,12 @@ export default function Testimonials() {
                     className="
                       mt-2
                       font-[family-name:var(--font-montserrat)]
-                      text-[9px]
-                      font-medium
+                      text-xs
+                      font-semibold
                       uppercase
-                      tracking-[0.25em]
-                      text-[#777168]
+                      tracking-[0.2em]
+                      text-[#5f5a52]
+                      md:text-sm
                     "
                   >
                     {testimonials[currentIndex].project}
@@ -618,8 +481,8 @@ export default function Testimonials() {
                 justify-center
                 rounded-full
                 border
-                border-[#8f9a9b]/50
-                text-[#666158]
+                border-[#8f9a9b]/80
+                text-[#3e3934]
                 transition-all
                 duration-300
                 hover:border-[#231f20]
@@ -658,7 +521,7 @@ export default function Testimonials() {
                     setCurrentIndex(idx)
                   }
                   className={`
-                    h-1.5
+                    h-2
                     rounded-full
                     transition-all
                     duration-500
@@ -666,7 +529,7 @@ export default function Testimonials() {
                     ${
                       idx === currentIndex
                         ? "w-8 bg-[#231f20]"
-                        : "w-1.5 bg-[#9c9589]"
+                        : "w-2 bg-[#8f9a9b]"
                     }
                   `}
                   aria-label={`Go to testimonial ${
@@ -689,8 +552,8 @@ export default function Testimonials() {
                 justify-center
                 rounded-full
                 border
-                border-[#8f9a9b]/50
-                text-[#666158]
+                border-[#8f9a9b]/80
+                text-[#3e3934]
                 transition-all
                 duration-300
                 hover:border-[#231f20]
@@ -750,11 +613,11 @@ export default function Testimonials() {
           <p
             className="
               font-[family-name:var(--font-montserrat)]
-              text-[8px]
-              font-medium
+              text-xs
+              font-semibold
               uppercase
               tracking-[0.3em]
-              text-[#777168]
+              text-[#5f5a52]
             "
           >
             People • Spaces • Emotions
@@ -764,8 +627,9 @@ export default function Testimonials() {
             className="
               font-[family-name:var(--font-cormorant)]
               text-xl
+              font-medium
               italic
-              text-[#4d4841]
+              text-[#231f20]
 
               md:text-2xl
             "
