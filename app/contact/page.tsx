@@ -1,3 +1,5 @@
+
+
 // app/contact/page.tsx
 
 "use client";
@@ -34,12 +36,10 @@ const SITE = {
 };
 
 const CONTACT = {
-  person: process.env.NEXT_PUBLIC_CONTACT_PERSON || "Surya Sinha",
-  phone: process.env.NEXT_PUBLIC_CONTACT_PHONE || "9310140480",
-  phoneDisplay: process.env.NEXT_PUBLIC_CONTACT_PHONE_DISPLAY || "9310 140 480",
+  person: process.env.NEXT_PUBLIC_CONTACT_PERSON || "Suchit Sinha",
   whatsapp: process.env.NEXT_PUBLIC_WHATSAPP_PHONE || "919205040314",
   whatsappDisplay: process.env.NEXT_PUBLIC_WHATSAPP_PHONE_DISPLAY || "9205 040 314",
-  email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || "hello@asangstudio.com",
+  email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || "suchit@asang.in",
   addressLine1:
     process.env.NEXT_PUBLIC_OFFICE_ADDRESS_LINE1 ||
     "#208, Vriksh Building, A-103, Sector 63",
@@ -726,17 +726,6 @@ export default function ContactUs() {
                     {CONTACT.email}
                   </a>
                   <CopyButton value={CONTACT.email} />
-                </div>
-
-                <div className="flex items-center">
-                  <a
-                    href={`tel:+${CONTACT.phone}`}
-                    className="inline-flex items-center gap-3 transition-colors hover:text-[#8F9A9B]"
-                  >
-                    <Icon name="phone" className="h-4 w-4 shrink-0 text-[#8F9A9B]" />
-                    {CONTACT.phoneDisplay}
-                  </a>
-                  <CopyButton value={CONTACT.phone} />
                 </div>
 
                 <a
