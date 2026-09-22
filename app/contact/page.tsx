@@ -1,21 +1,26 @@
 "use client";
 
 import { useState } from "react";
-
 import {
   motion,
   AnimatePresence,
   type Variants,
 } from "framer-motion";
 
+import type {
+  ChangeEvent,
+  FormEvent,
+  MouseEvent,
+} from "react";
+
 import {
   Cormorant_Garamond,
   Montserrat,
 } from "next/font/google";
 
-/* ─────────────────────────────────────────────────────────────────────────────
-   ASANG BRAND FONTS
-───────────────────────────────────────────────────────────────────────────── */
+// ─────────────────────────────────────────────────────────────────────────────
+// ASANG BRAND FONTS
+// ─────────────────────────────────────────────────────────────────────────────
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -29,9 +34,9 @@ const montserrat = Montserrat({
   variable: "--font-montserrat",
 });
 
-/* ─────────────────────────────────────────────────────────────────────────────
-   Studio info — pulled from env, with fallbacks
-───────────────────────────────────────────────────────────────────────────── */
+// ─────────────────────────────────────────────────────────────────────────────
+// STUDIO INFO
+// ─────────────────────────────────────────────────────────────────────────────
 
 const SITE = {
   name:
@@ -69,27 +74,27 @@ const CONTACT = {
     "#208, Vriksh Building, A-103, Sector 63, NOIDA - 201301, Uttar Pradesh, India",
 };
 
-/* ─────────────────────────────────────────────────────────────────────────────
-   Maps
-───────────────────────────────────────────────────────────────────────────── */
+// ─────────────────────────────────────────────────────────────────────────────
+// MAPS
+// ─────────────────────────────────────────────────────────────────────────────
 
 const MAPS_URL =
   `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
     CONTACT.addressFull
   )}`;
 
-/* ─────────────────────────────────────────────────────────────────────────────
-   WhatsApp
-───────────────────────────────────────────────────────────────────────────── */
+// ─────────────────────────────────────────────────────────────────────────────
+// WHATSAPP
+// ─────────────────────────────────────────────────────────────────────────────
 
 const WHATSAPP_URL =
   `https://wa.me/${CONTACT.whatsapp}?text=${encodeURIComponent(
     `Hi ${CONTACT.person}, I found ${SITE.name} online and would like to discuss a project.`
   )}`;
 
-/* ─────────────────────────────────────────────────────────────────────────────
-   Social links
-───────────────────────────────────────────────────────────────────────────── */
+// ─────────────────────────────────────────────────────────────────────────────
+// SOCIAL LINKS
+// ─────────────────────────────────────────────────────────────────────────────
 
 const SOCIALS = [
   {
@@ -137,9 +142,9 @@ const SOCIALS = [
   } => Boolean(social.url)
 );
 
-/* ─────────────────────────────────────────────────────────────────────────────
-   Icons
-───────────────────────────────────────────────────────────────────────────── */
+// ─────────────────────────────────────────────────────────────────────────────
+// ICONS
+// ─────────────────────────────────────────────────────────────────────────────
 
 function Icon({
   name,
@@ -318,9 +323,9 @@ function Icon({
   }
 }
 
-/* ─────────────────────────────────────────────────────────────────────────────
-   Animation variants
-───────────────────────────────────────────────────────────────────────────── */
+// ─────────────────────────────────────────────────────────────────────────────
+// ANIMATION VARIANTS
+// ─────────────────────────────────────────────────────────────────────────────
 
 const containerVariants: Variants = {
   hidden: {
@@ -364,17 +369,18 @@ const wordVariants: Variants = {
 
     transition: {
       duration: 0.9,
-      ease: [0.16, 1, 0.3, 1],
+      ease: [0.16, 1, 0.3, 1] as const,
     },
   },
 };
 
-/* ─────────────────────────────────────────────────────────────────────────────
-   Types
-───────────────────────────────────────────────────────────────────────────── */
+// ─────────────────────────────────────────────────────────────────────────────
+// TYPES
+// ─────────────────────────────────────────────────────────────────────────────
 
 type FormData = {
   name: string;
+  phone: string;
   email: string;
   vertical: string;
   message: string;
@@ -386,9 +392,9 @@ type Status =
   | "success"
   | "error";
 
-/* ─────────────────────────────────────────────────────────────────────────────
-   Copy button
-───────────────────────────────────────────────────────────────────────────── */
+// ─────────────────────────────────────────────────────────────────────────────
+// COPY BUTTON
+// ─────────────────────────────────────────────────────────────────────────────
 
 function CopyButton({
   value,
@@ -399,7 +405,7 @@ function CopyButton({
     useState(false);
 
   async function handleCopy(
-    e: React.MouseEvent
+    e: MouseEvent<HTMLButtonElement>
   ) {
     e.preventDefault();
 
@@ -480,9 +486,9 @@ function CopyButton({
   );
 }
 
-/* ─────────────────────────────────────────────────────────────────────────────
-   Floating field
-───────────────────────────────────────────────────────────────────────────── */
+// ─────────────────────────────────────────────────────────────────────────────
+// FLOATING FIELD
+// ─────────────────────────────────────────────────────────────────────────────
 
 function FloatingField({
   id,
@@ -491,6 +497,7 @@ function FloatingField({
   value,
   onChange,
   disabled,
+  required = true,
   textarea = false,
   rows = 4,
 }: {
@@ -498,21 +505,21 @@ function FloatingField({
   label: string;
   type?: string;
   value: string;
-
   onChange: (
-    e: React.ChangeEvent<
+    e: ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement
     >
   ) => void;
-
   disabled?: boolean;
+  required?: boolean;
   textarea?: boolean;
   rows?: number;
 }) {
   const sharedClasses = `
     peer
     w-full
-    border-b border-[#231F20]/20
+    border-b
+    border-[#231F20]/20
     bg-transparent
     pb-3
     pt-6
@@ -557,7 +564,7 @@ function FloatingField({
           onChange={onChange}
           placeholder=" "
           rows={rows}
-          required
+          required={required}
           disabled={disabled}
           className={`${sharedClasses} resize-none`}
         />
@@ -568,7 +575,7 @@ function FloatingField({
           value={value}
           onChange={onChange}
           placeholder=" "
-          required
+          required={required}
           disabled={disabled}
           className={sharedClasses}
         />
@@ -579,6 +586,11 @@ function FloatingField({
         className={labelClasses}
       >
         {label}
+        {required && (
+          <span className="ml-1 text-[#8F9A9B]">
+            *
+          </span>
+        )}
       </label>
 
       <span
@@ -601,9 +613,9 @@ function FloatingField({
   );
 }
 
-/* ─────────────────────────────────────────────────────────────────────────────
-   Component
-───────────────────────────────────────────────────────────────────────────── */
+// ─────────────────────────────────────────────────────────────────────────────
+// COMPONENT
+// ─────────────────────────────────────────────────────────────────────────────
 
 export default function ContactUs() {
   const [
@@ -611,6 +623,7 @@ export default function ContactUs() {
     setFormData,
   ] = useState<FormData>({
     name: "",
+    phone: "",
     email: "",
     vertical: "",
     message: "",
@@ -629,12 +642,12 @@ export default function ContactUs() {
   const isLoading =
     status === "loading";
 
-  /* ─────────────────────────────────────────────────────────────────────────
-     Form change
-  ───────────────────────────────────────────────────────────────────────── */
+  // ─────────────────────────────────────────
+  // FORM CHANGE
+  // ─────────────────────────────────────────
 
   const handleChange = (
-    e: React.ChangeEvent<
+    e: ChangeEvent<
       HTMLInputElement |
       HTMLTextAreaElement |
       HTMLSelectElement
@@ -651,16 +664,33 @@ export default function ContactUs() {
     }));
   };
 
-  /* ─────────────────────────────────────────────────────────────────────────
-     Form submit
-  ───────────────────────────────────────────────────────────────────────── */
+  // ─────────────────────────────────────────
+  // FORM SUBMIT
+  // ─────────────────────────────────────────
 
   const handleSubmit = async (
-    e: React.FormEvent<HTMLFormElement>
+    e: FormEvent<HTMLFormElement>
   ) => {
     e.preventDefault();
 
     if (isLoading) {
+      return;
+    }
+
+    // Client-side phone validation
+    const phoneDigits =
+      formData.phone.replace(/\D/g, "");
+
+    if (
+      phoneDigits.length < 7 ||
+      phoneDigits.length > 15
+    ) {
+      setStatus("error");
+
+      setStatusMessage(
+        "Please enter a valid phone number."
+      );
+
       return;
     }
 
@@ -687,9 +717,9 @@ export default function ContactUs() {
       const data =
         await response.json();
 
-      /* ─────────────────────────────────
-         API ERROR
-      ───────────────────────────────── */
+      // ─────────────────────────────
+      // API ERROR
+      // ─────────────────────────────
 
       if (!response.ok) {
         setStatus("error");
@@ -702,9 +732,9 @@ export default function ContactUs() {
         return;
       }
 
-      /* ─────────────────────────────────
-         SUCCESS
-      ───────────────────────────────── */
+      // ─────────────────────────────
+      // SUCCESS
+      // ─────────────────────────────
 
       setStatus("success");
 
@@ -715,6 +745,7 @@ export default function ContactUs() {
 
       setFormData({
         name: "",
+        phone: "",
         email: "",
         vertical: "",
         message: "",
@@ -733,15 +764,16 @@ export default function ContactUs() {
     }
   };
 
-  /* ─────────────────────────────────────────────────────────────────────────
-     Render
-  ───────────────────────────────────────────────────────────────────────── */
+  // ─────────────────────────────────────────
+  // RENDER
+  // ─────────────────────────────────────────
 
   return (
     <main
       className={`
         ${cormorant.variable}
         ${montserrat.variable}
+
         relative
         min-h-screen
         overflow-hidden
@@ -753,8 +785,9 @@ export default function ContactUs() {
         lg:py-32
       `}
     >
-
-      {/* ── Decorative background ── */}
+      {/* ─────────────────────────────────────
+          DECORATIVE BACKGROUND
+      ───────────────────────────────────── */}
 
       <div
         className="
@@ -785,20 +818,31 @@ export default function ContactUs() {
       />
 
       <motion.div
-        className="relative mx-auto max-w-7xl"
+        className="
+          relative
+          mx-auto
+          max-w-7xl
+        "
         variants={containerVariants}
         initial="hidden"
         animate="visible"
       >
-
-        {/* ── Header ── */}
+        {/* ─────────────────────────────────────
+            HEADER
+        ───────────────────────────────────── */}
 
         <motion.div
           variants={itemVariants}
           className="mb-20"
         >
-          <div className="mb-6 flex items-center gap-4">
-
+          <div
+            className="
+              mb-6
+              flex
+              items-center
+              gap-4
+            "
+          >
             <motion.span
               initial={{
                 scaleX: 0,
@@ -813,7 +857,11 @@ export default function ContactUs() {
               style={{
                 transformOrigin: "left",
               }}
-              className="h-px w-10 bg-[#8F9A9B]"
+              className="
+                h-px
+                w-10
+                bg-[#8F9A9B]
+              "
             />
 
             <span
@@ -828,7 +876,6 @@ export default function ContactUs() {
             >
               Start a Conversation
             </span>
-
           </div>
 
           <h1
@@ -844,20 +891,20 @@ export default function ContactUs() {
             "
           >
             <span className="block overflow-hidden">
-
               <motion.span
                 variants={wordVariants}
                 className="block"
               >
                 Get in Touch
               </motion.span>
-
             </span>
           </h1>
 
+          {/* UPDATED ASANG STATEMENT */}
+
           <p
             className="
-              max-w-2xl
+              max-w-3xl
               font-[family-name:var(--font-montserrat)]
               text-sm
               font-medium
@@ -866,32 +913,50 @@ export default function ContactUs() {
               md:text-base
             "
           >
-            Whether you are looking to build a
-            commercial space, renovate a
-            residential property, or design an
-            industrial facility, our team is here
-            to bring your vision to life.
+            From new homes and villas to
+            residential interiors, renovations,
+            offices, and retail spaces, we bring
+            together thoughtful design and precise
+            execution to transform your vision
+            into reality.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 gap-16 md:grid-cols-2 lg:gap-24">
-
+        <div
+          className="
+            grid
+            grid-cols-1
+            gap-16
+            md:grid-cols-2
+            lg:gap-24
+          "
+        >
           {/* ─────────────────────────────────
               FORM
           ───────────────────────────────── */}
 
-          <motion.div variants={itemVariants}>
-
+          <motion.div
+            variants={itemVariants}
+          >
             <form
               onSubmit={handleSubmit}
-              className="flex flex-col gap-10"
+              className="
+                flex
+                flex-col
+                gap-10
+              "
               noValidate
             >
+              {/* Name + Phone */}
 
-              {/* Name + Email */}
-
-              <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
-
+              <div
+                className="
+                  grid
+                  grid-cols-1
+                  gap-10
+                  md:grid-cols-2
+                "
+              >
                 <FloatingField
                   id="name"
                   label="Full Name"
@@ -901,20 +966,37 @@ export default function ContactUs() {
                 />
 
                 <FloatingField
-                  id="email"
-                  label="Email Address"
-                  type="email"
-                  value={formData.email}
+                  id="phone"
+                  label="Phone Number"
+                  type="tel"
+                  value={formData.phone}
                   onChange={handleChange}
                   disabled={isLoading}
+                  required
                 />
-
               </div>
+
+              {/* Email */}
+
+              <FloatingField
+                id="email"
+                label="Email Address"
+                type="email"
+                value={formData.email}
+                onChange={handleChange}
+                disabled={isLoading}
+                required={false}
+              />
 
               {/* Project Type */}
 
-              <div className="flex flex-col gap-3">
-
+              <div
+                className="
+                  flex
+                  flex-col
+                  gap-3
+                "
+              >
                 <label
                   htmlFor="vertical"
                   className="
@@ -927,6 +1009,9 @@ export default function ContactUs() {
                   "
                 >
                   Project Type
+                  <span className="ml-1">
+                    *
+                  </span>
                 </label>
 
                 <select
@@ -956,23 +1041,38 @@ export default function ContactUs() {
                     Select a vertical...
                   </option>
 
-                  <option value="commercial">
-                    Commercial
-                  </option>
-
                   <option value="residential">
                     Residential
+                  </option>
+
+                  <option value="commercial">
+                    Commercial
                   </option>
 
                   <option value="industrial">
                     Industrial
                   </option>
 
+                  <option value="retail">
+                    Retail
+                  </option>
+
+                  <option value="office">
+                    Office
+                  </option>
+
+                  <option value="renovation">
+                    Renovation
+                  </option>
+
+                  <option value="villa">
+                    Villa
+                  </option>
+
                   <option value="other">
                     Other
                   </option>
                 </select>
-
               </div>
 
               {/* Message */}
@@ -988,10 +1088,7 @@ export default function ContactUs() {
 
               {/* Feedback */}
 
-              <AnimatePresence
-                mode="wait"
-              >
-
+              <AnimatePresence mode="wait">
                 {status ===
                   "success" && (
                   <motion.div
@@ -1057,7 +1154,6 @@ export default function ContactUs() {
                     {statusMessage}
                   </motion.div>
                 )}
-
               </AnimatePresence>
 
               {/* Submit */}
@@ -1101,8 +1197,13 @@ export default function ContactUs() {
                   disabled:opacity-50
                 "
               >
-                <span className="inline-flex items-center gap-3">
-
+                <span
+                  className="
+                    inline-flex
+                    items-center
+                    gap-3
+                  "
+                >
                   {isLoading && (
                     <motion.span
                       className="
@@ -1127,12 +1228,9 @@ export default function ContactUs() {
                   {isLoading
                     ? "Sending..."
                     : "Send Inquiry"}
-
                 </span>
               </motion.button>
-
             </form>
-
           </motion.div>
 
           {/* ─────────────────────────────────
@@ -1151,11 +1249,9 @@ export default function ContactUs() {
               lg:pl-24
             "
           >
-
             {/* Studio address */}
 
             <div>
-
               <h3
                 className="
                   mb-4
@@ -1239,15 +1335,12 @@ export default function ContactUs() {
                     d="m13 6 6 6-6 6"
                   />
                 </svg>
-
               </a>
-
             </div>
 
             {/* Direct contact */}
 
             <div>
-
               <h3
                 className="
                   mb-4
@@ -1272,11 +1365,9 @@ export default function ContactUs() {
                   text-[#231F20]
                 "
               >
-
                 {/* Email */}
 
                 <div className="flex items-center">
-
                   <a
                     href={`mailto:${CONTACT.email}`}
                     className="
@@ -1303,7 +1394,6 @@ export default function ContactUs() {
                   <CopyButton
                     value={CONTACT.email}
                   />
-
                 </div>
 
                 {/* WhatsApp */}
@@ -1345,15 +1435,12 @@ export default function ContactUs() {
                     WhatsApp
                   </span>
                 </a>
-
               </div>
-
             </div>
 
             {/* Hours */}
 
             <div>
-
               <h3
                 className="
                   mb-4
@@ -1380,14 +1467,12 @@ export default function ContactUs() {
                 <br />
                 9:00 AM – 6:00 PM
               </p>
-
             </div>
 
             {/* Socials */}
 
             {SOCIALS.length > 0 && (
               <div>
-
                 <h3
                   className="
                     mb-4
@@ -1402,8 +1487,13 @@ export default function ContactUs() {
                   Follow the Studio
                 </h3>
 
-                <div className="flex flex-wrap gap-3">
-
+                <div
+                  className="
+                    flex
+                    flex-wrap
+                    gap-3
+                  "
+                >
                   {SOCIALS.map(
                     (social) => (
                       <motion.a
@@ -1439,19 +1529,16 @@ export default function ContactUs() {
                       </motion.a>
                     )
                   )}
-
                 </div>
-
               </div>
             )}
-
           </motion.div>
-
         </div>
-
       </motion.div>
 
-      {/* ── Floating WhatsApp action ── */}
+      {/* ─────────────────────────────────────
+          FLOATING WHATSAPP ACTION
+      ───────────────────────────────────── */}
 
       <motion.a
         href={WHATSAPP_URL}
@@ -1514,7 +1601,6 @@ export default function ContactUs() {
           "
         />
       </motion.a>
-
     </main>
   );
 }
