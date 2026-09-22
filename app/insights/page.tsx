@@ -238,7 +238,7 @@ export default function InsightsPage() {
           HERO
       ====================================================== */}
 
-      <section className="relative min-h-[82vh] overflow-hidden bg-[#231F20]">
+      <section className="relative min-h-[70svh] overflow-hidden bg-[#231F20] sm:min-h-[76vh] md:min-h-[82vh]">
         {/* Background */}
 
         <motion.div
@@ -321,7 +321,7 @@ export default function InsightsPage() {
 
         {/* Content */}
 
-        <div className="relative z-10 flex min-h-[82vh] items-end px-6 pb-14 sm:px-10 md:px-16 lg:px-24 lg:pb-20">
+        <div className="relative z-10 flex min-h-[70svh] items-end px-4 pb-10 sm:min-h-[76vh] sm:px-6 sm:pb-14 md:min-h-[82vh] md:px-16 lg:px-24 lg:pb-20">
           <motion.div
             initial="hidden"
             animate="visible"
@@ -332,7 +332,7 @@ export default function InsightsPage() {
 
             <motion.div
               variants={fadeUp}
-              className="mb-7 flex items-center gap-4"
+              className="mb-5 flex items-center gap-3 sm:mb-7 sm:gap-4"
             >
               <span className="h-px w-10 bg-[#DCC9A8]" />
 
@@ -358,12 +358,12 @@ export default function InsightsPage() {
               className="
                 max-w-6xl
                 font-[family-name:var(--font-cormorant)]
-                text-[4.4rem]
+                text-[3.4rem]
                 font-medium
-                leading-[0.78]
+                leading-[0.88]
                 tracking-[-0.035em]
                 text-white
-                sm:text-[6rem]
+                sm:text-[5rem]
                 md:text-[8rem]
                 lg:text-[9.5rem]
               "
@@ -380,10 +380,10 @@ export default function InsightsPage() {
             <motion.div
               variants={fadeUp}
               className="
-                mt-9
+                mt-7
                 flex
                 flex-col
-                gap-8
+                gap-6
                 md:flex-row
                 md:items-end
                 md:justify-between
@@ -393,9 +393,9 @@ export default function InsightsPage() {
                 className="
                   max-w-xl
                   font-[family-name:var(--font-montserrat)]
-                  text-sm
+                  text-xs
                   font-medium
-                  leading-[2]
+                  leading-[1.9]
                   text-white/80
                   md:text-base
                 "
@@ -405,7 +405,7 @@ export default function InsightsPage() {
                 and the way we experience space.
               </p>
 
-              <div className="flex items-center gap-4">
+              <div className="flex flex-col items-start gap-2 sm:flex-row sm:items-center sm:gap-4">
                 <span
                   className="
                     font-[family-name:var(--font-cormorant)]
@@ -455,7 +455,7 @@ export default function InsightsPage() {
           INTRO
       ====================================================== */}
 
-      <section className="bg-[#F7F4EE] px-6 py-24 sm:px-10 md:px-16 md:py-32 lg:px-24">
+      <section className="bg-[#F7F4EE] px-4 py-16 sm:px-6 sm:py-24 md:px-16 md:py-32 lg:px-24">
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -466,7 +466,7 @@ export default function InsightsPage() {
           variants={stagger}
           className="mx-auto max-w-7xl"
         >
-          <div className="grid gap-10 md:grid-cols-[0.7fr_1.3fr]">
+          <div className="grid gap-8 md:grid-cols-[0.7fr_1.3fr] md:gap-10">
             <motion.div variants={fadeUp}>
               <p
                 className="
@@ -490,9 +490,9 @@ export default function InsightsPage() {
                 className="
                   max-w-5xl
                   font-[family-name:var(--font-cormorant)]
-                  text-5xl
+                  text-4xl
                   font-medium
-                  leading-[0.88]
+                  leading-[0.92]
                   text-[#231F20]
                   sm:text-6xl
                   md:text-7xl
@@ -507,7 +507,7 @@ export default function InsightsPage() {
 
               <p
                 className="
-                  mt-8
+                  mt-6
                   max-w-2xl
                   font-[family-name:var(--font-montserrat)]
                   text-sm
@@ -531,7 +531,7 @@ export default function InsightsPage() {
           FEATURED INSIGHT
       ====================================================== */}
 
-      <section className="bg-[#EAE4D9] px-6 py-20 sm:px-10 md:px-16 md:py-28 lg:px-24">
+      <section className="bg-[#EAE4D9] px-4 py-16 sm:px-6 sm:py-20 md:px-16 md:py-28 lg:px-24">
         <div className="mx-auto max-w-7xl">
           <motion.div
             initial="hidden"
@@ -546,7 +546,7 @@ export default function InsightsPage() {
 
             <motion.div
               variants={fadeUp}
-              className="mb-8 flex items-center gap-4"
+              className="mb-6 flex items-center gap-3 sm:mb-8 sm:gap-4"
             >
               <span className="h-px w-10 bg-[#8F9A9B]" />
 
@@ -576,7 +576,7 @@ export default function InsightsPage() {
             >
               {/* Image */}
 
-              <div className="relative aspect-[4/3] overflow-hidden lg:aspect-auto lg:min-h-[570px]">
+              <div className="relative aspect-[4/3] overflow-hidden sm:aspect-[16/10] lg:aspect-auto lg:min-h-[570px]">
                 <Image
                   src={featured.image}
                   alt={featured.title}
@@ -593,7 +593,7 @@ export default function InsightsPage() {
 
                 <div className="absolute inset-0 bg-black/15" />
 
-                <div className="absolute bottom-6 left-6">
+                <div className="absolute bottom-4 left-4 sm:bottom-6 sm:left-6">
                   <span
                     className="
                       font-[family-name:var(--font-montserrat)]
@@ -611,9 +611,9 @@ export default function InsightsPage() {
 
               {/* Content */}
 
-              <div className="flex flex-col justify-between p-8 sm:p-10 md:p-12 lg:p-14">
+              <div className="flex flex-col justify-between p-6 sm:p-8 md:p-12 lg:p-14">
                 <div>
-                  <div className="flex items-center justify-between">
+                  <div className="flex flex-wrap items-end justify-between gap-3">
                     <span
                       className="
                         font-[family-name:var(--font-cormorant)]
@@ -627,11 +627,13 @@ export default function InsightsPage() {
                     <span
                       className="
                         font-[family-name:var(--font-montserrat)]
-                        text-xs
+                        text-[10px]
                         font-medium
                         uppercase
-                        tracking-[0.25em]
+                        tracking-[0.15em]
                         text-white/60
+                        sm:text-xs
+                        sm:tracking-[0.25em]
                       "
                     >
                       {featured.date}
@@ -640,7 +642,7 @@ export default function InsightsPage() {
 
                   <h3
                     className="
-                      mt-14
+                      mt-10
                       font-[family-name:var(--font-cormorant)]
                       text-4xl
                       font-medium
@@ -669,18 +671,20 @@ export default function InsightsPage() {
                   </p>
                 </div>
 
-                <div className="mt-12">
+                <div className="mt-10 sm:mt-12">
                   <div className="mb-6 flex items-center gap-4">
                     <span className="h-px w-10 bg-[#DCC9A8]" />
 
                     <span
                       className="
                         font-[family-name:var(--font-montserrat)]
-                        text-xs
+                        text-[10px]
                         font-medium
                         uppercase
-                        tracking-[0.25em]
+                        tracking-[0.15em]
                         text-white/60
+                        sm:text-xs
+                        sm:tracking-[0.25em]
                       "
                     >
                       {featured.readTime}
@@ -692,8 +696,11 @@ export default function InsightsPage() {
                     className="
                       group
                       flex
+                      w-full
                       items-center
+                      justify-center
                       gap-4
+                      sm:w-fit
                       rounded-full
                       border
                       border-white/40
@@ -718,31 +725,6 @@ export default function InsightsPage() {
                     >
                       Read Insight
                     </span>
-
-                    <svg
-                      className="
-                        h-4
-                        w-4
-                        transition-transform
-                        duration-500
-                        group-hover:translate-x-1
-                      "
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="1.4"
-                    >
-                      <path
-                        d="M5 12h14"
-                        strokeLinecap="round"
-                      />
-
-                      <path
-                        d="m13 6 6 6-6 6"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
                   </button>
                 </div>
               </div>
@@ -755,7 +737,7 @@ export default function InsightsPage() {
           CATEGORIES
       ====================================================== */}
 
-      <section className="bg-[#F7F4EE] px-6 py-16 sm:px-10 md:px-16 lg:px-24">
+      <section className="bg-[#F7F4EE] px-4 py-12 sm:px-6 sm:py-16 md:px-16 lg:px-24">
         <div className="mx-auto max-w-7xl">
           <div className="flex flex-col gap-7 md:flex-row md:items-center md:justify-between">
             <div>
@@ -777,16 +759,16 @@ export default function InsightsPage() {
                 className="
                   mt-3
                   font-[family-name:var(--font-cormorant)]
-                  text-4xl
+                  text-3xl
                   font-medium
-                  text-[#231F20]
+                  text-[#231F20] sm:text-4xl
                 "
               >
                 Browse the journal.
               </h2>
             </div>
 
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap gap-2.5 sm:gap-3">
               {categories.map((category) => {
                 const isActive = activeCategory === category;
 
@@ -798,8 +780,10 @@ export default function InsightsPage() {
                     className={`
                       rounded-full
                       border
-                      px-5
-                      py-2.5
+                      px-4
+                      py-2
+                      sm:px-5
+                      sm:py-2.5
                       font-[family-name:var(--font-montserrat)]
                       text-xs
                       font-semibold
@@ -827,11 +811,11 @@ export default function InsightsPage() {
           ARTICLE GRID
       ====================================================== */}
 
-      <section className="bg-[#F7F4EE] px-6 pb-24 sm:px-10 md:px-16 md:pb-32 lg:px-24">
+      <section className="bg-[#F7F4EE] px-4 pb-16 sm:px-6 sm:pb-24 md:px-16 md:pb-32 lg:px-24">
         <div className="mx-auto max-w-7xl">
           <motion.div
             layout
-            className="grid gap-x-6 gap-y-16 md:grid-cols-2 lg:grid-cols-3"
+            className="grid gap-x-5 gap-y-12 sm:gap-y-14 md:grid-cols-2 md:gap-x-6 md:gap-y-16 lg:grid-cols-3"
           >
             {filteredInsights
               .filter((insight) => !insight.featured)
@@ -860,7 +844,7 @@ export default function InsightsPage() {
                 >
                   {/* Image */}
 
-                  <div className="relative aspect-[4/3] overflow-hidden bg-[#EAE4D9]">
+                  <div className="relative aspect-[4/3] overflow-hidden bg-[#EAE4D9] sm:aspect-[4/3]">
                     <Image
                       src={insight.image}
                       alt={insight.title}
@@ -879,7 +863,7 @@ export default function InsightsPage() {
 
                     {/* Number */}
 
-                    <div className="absolute left-5 top-5 flex h-10 w-10 items-center justify-center rounded-full border border-white/40 bg-black/10 backdrop-blur-md">
+                    <div className="absolute left-4 top-4 flex h-9 w-9 sm:left-5 sm:top-5 sm:h-10 sm:w-10 items-center justify-center rounded-full border border-white/40 bg-black/10 backdrop-blur-md">
                       <span
                         className="
                           font-[family-name:var(--font-cormorant)]
@@ -893,15 +877,16 @@ export default function InsightsPage() {
 
                     {/* Category */}
 
-                    <div className="absolute bottom-5 left-5">
+                    <div className="absolute bottom-4 left-4 sm:bottom-5 sm:left-5">
                       <span
                         className="
                           rounded-full
                           border
                           border-white/40
                           bg-black/20
-                          px-3
+                          px-2.5
                           py-1.5
+                          sm:px-3
                           font-[family-name:var(--font-montserrat)]
                           text-xs
                           font-semibold
@@ -914,64 +899,19 @@ export default function InsightsPage() {
                         {insight.category}
                       </span>
                     </div>
-
-                    {/* Arrow */}
-
-                    <div
-                      className="
-                        absolute
-                        bottom-5
-                        right-5
-                        flex
-                        h-10
-                        w-10
-                        translate-y-3
-                        items-center
-                        justify-center
-                        rounded-full
-                        border
-                        border-white/40
-                        bg-black/20
-                        opacity-0
-                        backdrop-blur-md
-                        transition-all
-                        duration-500
-                        group-hover:translate-y-0
-                        group-hover:opacity-100
-                      "
-                    >
-                      <svg
-                        className="h-4 w-4 text-white"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="1.4"
-                      >
-                        <path
-                          d="M5 12h14"
-                          strokeLinecap="round"
-                        />
-
-                        <path
-                          d="m13 6 6 6-6 6"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    </div>
                   </div>
 
                   {/* Text */}
 
-                  <div className="pt-6">
-                    <div className="flex items-center justify-between">
+                  <div className="pt-5 sm:pt-6">
+                    <div className="flex flex-wrap items-end justify-between gap-3">
                       <span
                         className="
                           font-[family-name:var(--font-montserrat)]
-                          text-xs
+                          text-[10px]
                           font-medium
                           uppercase
-                          tracking-[0.2em]
+                          tracking-[0.16em] sm:text-xs sm:tracking-[0.2em]
                           text-[#8F9A9B]
                         "
                       >
@@ -981,10 +921,10 @@ export default function InsightsPage() {
                       <span
                         className="
                           font-[family-name:var(--font-montserrat)]
-                          text-xs
+                          text-[10px]
                           font-medium
                           uppercase
-                          tracking-[0.15em]
+                          tracking-[0.1em] sm:text-xs sm:tracking-[0.15em]
                           text-[#8F9A9B]
                         "
                       >
@@ -996,8 +936,9 @@ export default function InsightsPage() {
                       className="
                         mt-4
                         font-[family-name:var(--font-cormorant)]
-                        text-3xl
+                        text-[2.15rem]
                         font-medium
+                        sm:text-3xl
                         leading-[0.95]
                         text-[#231F20]
                         transition-colors
@@ -1047,7 +988,7 @@ export default function InsightsPage() {
           {filteredInsights.filter(
             (insight) => !insight.featured
           ).length === 0 && (
-            <div className="py-24 text-center">
+            <div className="py-20 text-center sm:py-24">
               <p
                 className="
                   font-[family-name:var(--font-cormorant)]
@@ -1066,9 +1007,9 @@ export default function InsightsPage() {
           DESIGN NOTE
       ====================================================== */}
 
-      <section className="bg-[#231F20] px-6 py-24 sm:px-10 md:px-16 md:py-32 lg:px-24">
+      <section className="bg-[#231F20] px-4 py-16 sm:px-6 sm:py-24 md:px-16 md:py-32 lg:px-24">
         <div className="mx-auto max-w-7xl">
-          <div className="grid gap-14 lg:grid-cols-[0.7fr_1.3fr] lg:items-center">
+          <div className="grid gap-10 lg:grid-cols-[0.7fr_1.3fr] lg:items-center lg:gap-14">
             {/* Image */}
 
             <motion.div
@@ -1088,7 +1029,7 @@ export default function InsightsPage() {
                 duration: 0.9,
                 ease: "easeOut",
               }}
-              className="relative aspect-[4/5] overflow-hidden"
+              className="relative aspect-[4/5] max-h-[520px] overflow-hidden sm:max-h-none"
             >
               <Image
                 src={IMAGES.texture}
@@ -1101,7 +1042,7 @@ export default function InsightsPage() {
 
               <div className="absolute inset-0 bg-black/20" />
 
-              <div className="absolute bottom-6 left-6">
+              <div className="absolute bottom-4 left-4 sm:bottom-6 sm:left-6">
                 <span
                   className="
                     font-[family-name:var(--font-montserrat)]
@@ -1148,9 +1089,9 @@ export default function InsightsPage() {
                 className="
                   mt-7
                   font-[family-name:var(--font-cormorant)]
-                  text-5xl
+                  text-4xl
                   font-medium
-                  leading-[0.88]
+                  leading-[0.92]
                   text-[#F7F4EE]
                   sm:text-6xl
                   md:text-7xl
@@ -1169,9 +1110,9 @@ export default function InsightsPage() {
                   mt-9
                   max-w-xl
                   font-[family-name:var(--font-montserrat)]
-                  text-sm
+                  text-xs
                   font-medium
-                  leading-[2]
+                  leading-[1.9]
                   text-white/70
                   md:text-base
                 "
@@ -1184,7 +1125,7 @@ export default function InsightsPage() {
 
               <motion.div
                 variants={fadeUp}
-                className="mt-9 flex items-center gap-4"
+                className="mt-8 flex flex-wrap items-center gap-3 sm:mt-9 sm:gap-4"
               >
                 <span className="h-px w-10 bg-[#DCC9A8]" />
 
@@ -1210,7 +1151,7 @@ export default function InsightsPage() {
           JOURNAL CATEGORIES
       ====================================================== */}
 
-      <section className="bg-[#EAE4D9] px-6 py-24 sm:px-10 md:px-16 md:py-32 lg:px-24">
+      <section className="bg-[#EAE4D9] px-4 py-16 sm:px-6 sm:py-24 md:px-16 md:py-32 lg:px-24">
         <div className="mx-auto max-w-7xl">
           <motion.div
             initial="hidden"
@@ -1242,9 +1183,9 @@ export default function InsightsPage() {
               <h2
                 className="
                   font-[family-name:var(--font-cormorant)]
-                  text-5xl
+                  text-4xl
                   font-medium
-                  leading-[0.88]
+                  leading-[0.92]
                   text-[#231F20]
                   sm:text-6xl
                   md:text-7xl
@@ -1258,7 +1199,7 @@ export default function InsightsPage() {
               </h2>
             </motion.div>
 
-            <div className="mt-16 grid border-t border-[#231F20]/20 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="mt-12 grid border-t sm:mt-16 border-[#231F20]/20 sm:grid-cols-2 lg:grid-cols-4">
               <JournalCategory
                 number="01"
                 title="Design"
@@ -1291,7 +1232,7 @@ export default function InsightsPage() {
           CTA
       ====================================================== */}
 
-      <section className="bg-[#DCC9A8] px-6 py-24 sm:px-10 md:px-16 md:py-32 lg:px-24">
+      <section className="bg-[#DCC9A8] px-4 py-16 sm:px-6 sm:py-24 md:px-16 md:py-32 lg:px-24">
         <motion.div
           initial={{
             opacity: 0,
@@ -1311,7 +1252,7 @@ export default function InsightsPage() {
           }}
           className="mx-auto max-w-7xl"
         >
-          <div className="grid gap-10 md:grid-cols-[1fr_auto] md:items-end">
+          <div className="grid gap-8 md:grid-cols-[1fr_auto] md:items-end md:gap-10">
             <div>
               <p
                 className="
@@ -1332,12 +1273,12 @@ export default function InsightsPage() {
                 className="
                   max-w-5xl
                   font-[family-name:var(--font-cormorant)]
-                  text-6xl
+                  text-[3.4rem]
                   font-medium
-                  leading-[0.8]
+                  leading-[0.86]
                   tracking-[-0.025em]
                   text-[#231F20]
-                  sm:text-7xl
+                  sm:text-6xl
                   md:text-8xl
                 "
               >
@@ -1353,9 +1294,9 @@ export default function InsightsPage() {
                   mt-8
                   max-w-lg
                   font-[family-name:var(--font-montserrat)]
-                  text-sm
+                  text-xs
                   font-medium
-                  leading-[2]
+                  leading-[1.9]
                   text-[#4b453e]
                   md:text-base
                 "
@@ -1371,9 +1312,12 @@ export default function InsightsPage() {
               className="
                 group
                 flex
-                w-fit
+                w-full
                 items-center
-                gap-5
+                justify-center
+                gap-4
+                sm:w-fit
+                sm:gap-5
                 rounded-full
                 border
                 border-[#231F20]
@@ -1479,9 +1423,11 @@ function JournalCategory({
 
       <h3
         className="
-          mt-9
+          mt-7
           font-[family-name:var(--font-cormorant)]
-          text-3xl
+          text-2xl
+          sm:mt-9
+          sm:text-3xl
           font-medium
           text-[#231F20]
         "
