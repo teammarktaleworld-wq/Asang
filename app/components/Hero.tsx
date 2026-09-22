@@ -1,11 +1,13 @@
-// my-asang/app/components/Hero.tsx
-
 "use client";
 
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import {
+  motion,
+  AnimatePresence,
+} from "framer-motion";
+
 import {
   Cormorant_Garamond,
   Montserrat,
@@ -29,7 +31,10 @@ const montserrat = Montserrat({
   variable: "--font-montserrat",
 });
 
-// Add your dynamic text phrases here
+/* =========================================================
+   DYNAMIC HEADLINE PHRASES
+   ========================================================= */
+
 const dynamicPhrases = [
   "SPACES FOR A BETTER LIVING",
   "CRAFTING BEAUTIFUL INTERIORS",
@@ -37,18 +42,48 @@ const dynamicPhrases = [
   "ELEVATING YOUR LIFESTYLE",
 ];
 
-export default function Hero() {
-  const [currentPhraseIndex, setCurrentPhraseIndex] = useState(0);
+/* =========================================================
+   WHATSAPP CONFIGURATION
+   Uses NEXT_PUBLIC_WHATSAPP_PHONE from .env.local
+   ========================================================= */
 
-  // Rotate text every 3.5 seconds
+const whatsappNumber =
+  process.env.NEXT_PUBLIC_WHATSAPP_PHONE ||
+  "919205040314";
+
+const whatsappMessage =
+  "Hi ASANG Design Studio, I came across your website and would like to discuss a project. I’m interested in your architecture and interior design services. Could you please share more details?";
+
+const whatsappUrl =
+  `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
+    whatsappMessage
+  )}`;
+
+/* =========================================================
+   HERO COMPONENT
+   ========================================================= */
+
+export default function Hero() {
+  const [
+    currentPhraseIndex,
+    setCurrentPhraseIndex,
+  ] = useState(0);
+
+  /* =======================================================
+     ROTATE TEXT EVERY 3.5 SECONDS
+     ======================================================= */
+
   useEffect(() => {
     const intervalId = setInterval(() => {
-      setCurrentPhraseIndex((prevIndex) => 
-        (prevIndex + 1) % dynamicPhrases.length
+      setCurrentPhraseIndex(
+        (prevIndex) =>
+          (prevIndex + 1) %
+          dynamicPhrases.length
       );
     }, 3500);
 
-    return () => clearInterval(intervalId); // Cleanup on unmount
+    return () =>
+      clearInterval(intervalId);
   }, []);
 
   return (
@@ -56,6 +91,7 @@ export default function Hero() {
       className={`
         ${cormorant.variable}
         ${montserrat.variable}
+
         relative
         flex
         h-screen
@@ -66,9 +102,9 @@ export default function Hero() {
         overflow-hidden
       `}
     >
-      {/* ========================================
+      {/* ==================================================
           HERO BACKGROUND IMAGE
-          ======================================== */}
+          ================================================== */}
 
       <div className="absolute inset-0 z-0">
         <Image
@@ -85,47 +121,98 @@ export default function Hero() {
         <div className="absolute inset-0 bg-black/40" />
       </div>
 
-      {/* ========================================
+      {/* ==================================================
           HERO CONTENT
-          ======================================== */}
+          ================================================== */}
 
-      <div className="relative z-10 mx-auto flex w-full max-w-5xl flex-col items-center px-6 text-center text-white md:px-8">
-        {/* ========================================
+      <div
+        className="
+          relative
+          z-10
+          mx-auto
+          flex
+          w-full
+          max-w-5xl
+          flex-col
+          items-center
+          px-6
+          text-center
+          text-white
+          md:px-8
+        "
+      >
+        {/* ==================================================
             BRAND / LOGO
-            ======================================== */}
+            ================================================== */}
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{
+            opacity: 0,
+            y: 20,
+          }}
+          animate={{
+            opacity: 1,
+            y: 0,
+          }}
           transition={{
             duration: 0.7,
             ease: "easeOut",
           }}
-          className="mb-4 flex flex-col items-center md:mb-6"
+          className="
+            mb-4
+            flex
+            flex-col
+            items-center
+            md:mb-6
+          "
         >
-          {/* Brand Logo Image */}
           <Image
             src="/Asang-logo-trans-white.png"
             alt="Asang Logo"
             width={400}
             height={150}
             priority
-            className="h-auto w-64 drop-shadow-lg sm:w-80 md:w-96 lg:w-[400px]"
+            className="
+              h-auto
+              w-64
+              drop-shadow-lg
+              sm:w-80
+              md:w-96
+              lg:w-[400px]
+            "
           />
         </motion.div>
 
-        {/* ========================================
+        {/* ==================================================
             DYNAMIC HEADLINE
-            ======================================== */}
+            ================================================== */}
 
-        {/* Wrapper with a fixed height/min-height to prevent layout jumps when text changes */}
-        <div className="mb-10 flex min-h-[60px] items-center justify-center md:mb-12 md:min-h-[80px]">
+        <div
+          className="
+            mb-10
+            flex
+            min-h-[60px]
+            items-center
+            justify-center
+            md:mb-12
+            md:min-h-[80px]
+          "
+        >
           <AnimatePresence mode="wait">
             <motion.h3
-              key={currentPhraseIndex} // The key forces the animation to re-run when the index changes
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -15 }}
+              key={currentPhraseIndex}
+              initial={{
+                opacity: 0,
+                y: 15,
+              }}
+              animate={{
+                opacity: 1,
+                y: 0,
+              }}
+              exit={{
+                opacity: 0,
+                y: -15,
+              }}
               transition={{
                 duration: 0.5,
                 ease: "easeInOut",
@@ -140,33 +227,49 @@ export default function Hero() {
                 lg:text-5xl
               "
             >
-              {dynamicPhrases[currentPhraseIndex]}
+              {dynamicPhrases[
+                currentPhraseIndex
+              ]}
             </motion.h3>
           </AnimatePresence>
         </div>
 
-        {/* ========================================
+        {/* ==================================================
             ACTION BUTTONS
-            ======================================== */}
+            ================================================== */}
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{
+            opacity: 0,
+            y: 20,
+          }}
+          animate={{
+            opacity: 1,
+            y: 0,
+          }}
           transition={{
             duration: 0.7,
             delay: 0.3,
             ease: "easeOut",
           }}
-          className="flex flex-col items-center gap-4 sm:flex-row sm:gap-6"
+          className="
+            flex
+            flex-col
+            items-center
+            gap-4
+            sm:flex-row
+            sm:gap-6
+          "
         >
-          {/* ========================================
+          {/* ==================================================
               WHATSAPP BUTTON
-              ======================================== */}
+              ================================================== */}
 
           <Link
-            href="https://wa.me/YOUR_NUMBER_HERE"
+            href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="Chat with ASANG Design Studio on WhatsApp"
             className="
               group
               relative
@@ -211,7 +314,13 @@ export default function Hero() {
             {/* WhatsApp Icon */}
 
             <svg
-              className="relative z-10 h-5 w-5 text-green-400"
+              className="
+                relative
+                z-10
+                h-5
+                w-5
+                text-green-400
+              "
               fill="currentColor"
               viewBox="0 0 24 24"
               aria-hidden="true"
@@ -233,9 +342,9 @@ export default function Hero() {
             </span>
           </Link>
 
-          {/* ========================================
+          {/* ==================================================
               BOOK CONSULTATION BUTTON
-              ======================================== */}
+              ================================================== */}
 
           <Link
             href="/contact"
