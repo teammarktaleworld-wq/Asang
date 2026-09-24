@@ -97,15 +97,38 @@ const founders = [
     name: "Surya Sinha",
     role: "Founder",
     description:
-      "Leading ASANG with a vision to create thoughtful spaces that balance character, functionality and timeless design.",
+      "Leading ASANG with a vision to create thoughtful spaces that balance character, functionality, intelligent engineering and timeless design.",
   },
-
   {
     number: "02",
     name: "Suchit Sinha",
     role: "Co-founder",
     description:
-      "Bringing a thoughtful design perspective to create refined environments where material, proportion and everyday living come together.",
+      "Bringing a thoughtful design perspective to create refined environments where material, proportion, purpose and everyday living come together.",
+  },
+];
+
+const teamMembers = [
+  {
+    number: "01",
+    name: "Manoj Kumar",
+    role: "Associate",
+    description:
+      "An associate and valued part of the ASANG team, contributing to the studio's design process and the development of thoughtful spaces.",
+  },
+  {
+    number: "02",
+    name: "Sujata Baranwal",
+    role: "Sr. Interior Designer",
+    description:
+      "Bringing experience and design sensitivity to interior projects, with a focus on thoughtful spaces, detailing and material expression.",
+  },
+  {
+    number: "03",
+    name: "Ashish Singh",
+    role: "Sr. Designer",
+    description:
+      "Contributing to ASANG's design process through creative thinking, detailing and a considered approach to spatial design.",
   },
 ];
 
@@ -278,38 +301,7 @@ export default function AboutPage() {
                 everyday life come together.
               </p>
 
-              <div className="flex flex-wrap items-center gap-3 sm:gap-4">
-                <span
-                  className="
-                    font-[family-name:var(--font-cormorant)]
-                    text-4xl
-                    text-[#DCC9A8]
-                  "
-                >
-                  2022
-                </span>
 
-                <span
-                  className="
-                    h-px
-                    w-14
-                    bg-white/40
-                  "
-                />
-
-                <span
-                  className="
-                    font-[family-name:var(--font-montserrat)]
-                    text-xs
-                    font-semibold
-                    uppercase
-                    tracking-[0.3em]
-                    text-white/70
-                  "
-                >
-                  Founded
-                </span>
-              </div>
             </motion.div>
           </motion.div>
         </div>
@@ -390,10 +382,7 @@ export default function AboutPage() {
                   md:text-base
                 "
               >
-                ASANG Design Studio was founded in 2022
-                with a shared vision to create spaces that
-                feel considered, authentic and deeply
-                connected to the people who experience them.
+                ASANG Design Studio creates thoughtful spaces that connect emotionally, perform intelligently, reflect individuality and endure beautifully. Our work brings together architecture, interiors, engineering, materiality and execution to create environments that are distinctive, functional and lasting.
               </p>
 
               <p
@@ -408,11 +397,7 @@ export default function AboutPage() {
                   md:text-base
                 "
               >
-                We believe that great interiors are not
-                defined by excess. They are shaped by
-                proportion, material, light, functionality
-                and the small details that make a space feel
-                like home.
+                We believe exceptional spaces go beyond aesthetics. They should be well-engineered, functional, durable and environmentally responsible, while creating a strong emotional connection with the people who experience them. Every space should reflect its people, purpose and context.
               </p>
             </motion.div>
           </div>
@@ -852,85 +837,35 @@ export default function AboutPage() {
             </motion.div>
           </motion.div>
 
-          {/* Associate */}
+          {/* Team members */}
 
-          <motion.div
-            initial={{
-              opacity: 0,
-              y: 30,
-            }}
-            whileInView={{
-              opacity: 1,
-              y: 0,
-            }}
-            viewport={{
-              once: true,
-              amount: 0.2,
-            }}
-            transition={{
-              duration: 0.8,
-              ease: "easeOut",
-            }}
-            className="
-              mt-16
-              border-t
-              border-[#231F20]/20
-              pt-8
-              md:mt-20
-              md:flex
-              md:items-end
-              md:justify-between
-              md:gap-10
-            "
-          >
-            <div>
-              <p
-                className="
-                  font-[family-name:var(--font-montserrat)]
-                  text-xs
-                  font-semibold
-                  uppercase
-                  tracking-[0.3em]
-                  text-[#8F9A9B]
-                "
+          <div className="mt-16 border-t border-[#231F20]/20 md:mt-20">
+            {teamMembers.map((member, index) => (
+              <motion.div
+                key={member.name}
+                initial={{ opacity: 0, y: 25 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.15 }}
+                transition={{ duration: 0.7, delay: index * 0.08, ease: "easeOut" }}
+                className="grid gap-6 border-b border-[#231F20]/20 py-8 md:grid-cols-[0.15fr_0.65fr_0.7fr] md:items-center md:gap-10"
               >
-                Associate
-              </p>
-
-              <h3
-                className="
-                  mt-5
-                  font-[family-name:var(--font-cormorant)]
-                  text-4xl
-                  font-medium
-                  text-[#231F20]
-                  sm:text-5xl
-                  md:text-6xl
-                "
-              >
-                Manoj Kumar
-              </h3>
-            </div>
-
-            <p
-              className="
-                mt-6
-                max-w-xl
-                font-[family-name:var(--font-montserrat)]
-                text-sm
-                font-medium
-                leading-[2]
-                text-[#514d45]
-                md:mt-0
-                md:text-base
-              "
-            >
-              An associate and valued part of the ASANG
-              team, contributing to the studio's design
-              process and the development of thoughtful
-              spaces.
-            </p>
-          </motion.div>
+                <span className="font-[family-name:var(--font-montserrat)] text-xs font-semibold tracking-[0.25em] text-[#8F9A9B]">
+                  {member.number}
+                </span>
+                <div>
+                  <p className="font-[family-name:var(--font-montserrat)] text-xs font-semibold uppercase tracking-[0.25em] text-[#8F9A9B]">
+                    {member.role}
+                  </p>
+                  <h3 className="mt-3 font-[family-name:var(--font-cormorant)] text-4xl font-medium text-[#231F20] sm:text-5xl">
+                    {member.name}
+                  </h3>
+                </div>
+                <p className="max-w-xl font-[family-name:var(--font-montserrat)] text-sm font-medium leading-[2] text-[#514d45] md:text-base">
+                  {member.description}
+                </p>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -1098,128 +1033,6 @@ export default function AboutPage() {
                 />
               </motion.div>
             </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* ======================================================
-          JOURNEY / 2022
-      ====================================================== */}
-
-      <section className="bg-[#EAE4D9] px-5 py-20 sm:px-10 sm:py-24 md:px-16 md:py-32 lg:px-24">
-        <div className="mx-auto max-w-7xl">
-
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{
-              once: true,
-              amount: 0.2,
-            }}
-            variants={stagger}
-          >
-            <motion.div
-              variants={fadeUp}
-              className="flex items-center gap-4"
-            >
-              <span className="h-px w-10 bg-[#8F9A9B]" />
-
-              <span
-                className="
-                  font-[family-name:var(--font-montserrat)]
-                  text-xs
-                  font-semibold
-                  uppercase
-                  tracking-[0.35em]
-                  text-[#777168]
-                  md:text-sm
-                "
-              >
-                Our Journey
-              </span>
-            </motion.div>
-
-            <motion.div
-              variants={fadeUp}
-              className="mt-7 grid gap-10 md:grid-cols-[0.65fr_1.35fr]"
-            >
-              <h2
-                className="
-                  font-[family-name:var(--font-cormorant)]
-                  text-6xl
-                  font-medium
-                  leading-[0.8]
-                  text-[#231F20]
-                  sm:text-7xl
-                  md:text-8xl
-                "
-              >
-                Since
-                <br />
-
-                <span className="italic text-[#777168]">
-                  2022
-                </span>
-              </h2>
-
-              <div className="md:pt-3">
-                <p
-                  className="
-                    max-w-2xl
-                    font-[family-name:var(--font-montserrat)]
-                    text-sm
-                    font-medium
-                    leading-[2]
-                    text-[#514d45]
-                    md:text-base
-                  "
-                >
-                  From our beginning in 2022, ASANG has been
-                  guided by a simple ambition — to create
-                  interiors that remain relevant beyond
-                  passing trends.
-                </p>
-
-                <p
-                  className="
-                    mt-5
-                    max-w-2xl
-                    font-[family-name:var(--font-montserrat)]
-                    text-sm
-                    font-medium
-                    leading-[2]
-                    text-[#514d45]
-                    md:text-base
-                  "
-                >
-                  Every project is an opportunity to explore
-                  new ideas while staying grounded in the
-                  fundamentals of good design.
-                </p>
-              </div>
-            </motion.div>
-          </motion.div>
-
-          {/* Timeline */}
-
-          <div className="mt-14 border-t border-[#231F20]/25 sm:mt-20">
-            <TimelineItem
-              year="2022"
-              title="The Beginning"
-              text="ASANG Design Studio begins with a shared vision for meaningful design."
-            />
-
-            <TimelineItem
-              year="01"
-              title="Ideas Into Spaces"
-              text="Concepts evolve through material, proportion, light and functionality."
-            />
-
-            <TimelineItem
-              year="NOW"
-              title="Looking Forward"
-              text="Continuing to create spaces that feel personal, timeless and considered."
-            />
           </div>
         </div>
       </section>
@@ -1573,3 +1386,10 @@ function TimelineItem({
     </motion.div>
   );
 }
+
+
+
+
+
+
+

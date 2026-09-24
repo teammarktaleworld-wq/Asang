@@ -1,13 +1,52 @@
-import { NextResponse } from "next/server";
-import {
-  collection,
-  addDoc,
-  serverTimestamp,
-} from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { NextResponse, after } from "next/server";
+import { randomBytes } from "crypto";
+import { FieldValue } from "firebase-admin/firestore";
+
+import { adminDb } from "@/lib/firebaseAdmin";
+import { sendEnquiryEmail } from "@/lib/emailService";
+
+export const runtime = "nodejs";
+
+// ============================================================
+// TICKET ID
+// ============================================================
+
+function generateTicketId() {
+  const date = new Date()
+    .toISOString()
+    .slice(0, 10)
+    .replace(/-/g, "");
+
+  const random = randomBytes(3)
+    .toString("hex")
+    .toUpperCase();
+
+  return `ASG-${date}-${random}`;
+}
+
+// ============================================================
+// ALLOWED PROJECT TYPES
+// ============================================================
+
+const ALLOWED_PROJECT_TYPES = new Set([
+  "residential",
+  "commercial",
+  "retail",
+  "office",
+  "renovation",
+  "other",
+]);
+
+// ============================================================
+// POST
+// ============================================================
 
 export async function POST(request: Request) {
   try {
+    // ========================================================
+    // READ REQUEST
+    // ========================================================
+
     const body = await request.json();
 
     const {
@@ -18,19 +57,27 @@ export async function POST(request: Request) {
       message,
     } = body;
 
-    // ------------------------------------------------------------
+    // ========================================================
     // CLEAN VALUES
-    // ------------------------------------------------------------
+    // ========================================================
 
     const cleanName = String(name ?? "").trim();
+
     const cleanPhone = String(phone ?? "").trim();
-    const cleanEmail = String(email ?? "").trim().toLowerCase();
-    const cleanVertical = String(vertical ?? "").trim();
+
+    const cleanEmail = String(email ?? "")
+      .trim()
+      .toLowerCase();
+
+    const cleanVertical = String(vertical ?? "")
+      .trim()
+      .toLowerCase();
+
     const cleanMessage = String(message ?? "").trim();
 
-    // ------------------------------------------------------------
+    // ========================================================
     // REQUIRED FIELD VALIDATION
-    // ------------------------------------------------------------
+    // ========================================================
 
     if (
       !cleanName ||
@@ -41,8 +88,7 @@ export async function POST(request: Request) {
       return NextResponse.json(
         {
           success: false,
-          message:
-            "Please fill in all required fields.",
+          message: "Please fill in all required fields.",
         },
         {
           status: 400,
@@ -50,12 +96,26 @@ export async function POST(request: Request) {
       );
     }
 
-    // ------------------------------------------------------------
-    // PHONE VALIDATION
-    // ------------------------------------------------------------
+    // ========================================================
+    // PROJECT TYPE VALIDATION
+    // ========================================================
 
-    // Allows numbers with spaces, +, -, brackets, etc.
-    // but requires at least 7 and at most 15 digits.
+    if (!ALLOWED_PROJECT_TYPES.has(cleanVertical)) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Please select a valid project type.",
+        },
+        {
+          status: 400,
+        }
+      );
+    }
+
+    // ========================================================
+    // PHONE VALIDATION
+    // ========================================================
+
     const phoneDigits = cleanPhone.replace(/\D/g, "");
 
     if (
@@ -65,8 +125,7 @@ export async function POST(request: Request) {
       return NextResponse.json(
         {
           success: false,
-          message:
-            "Please enter a valid phone number.",
+          message: "Please enter a valid phone number.",
         },
         {
           status: 400,
@@ -74,9 +133,9 @@ export async function POST(request: Request) {
       );
     }
 
-    // ------------------------------------------------------------
-    // OPTIONAL EMAIL VALIDATION
-    // ------------------------------------------------------------
+    // ========================================================
+    // EMAIL VALIDATION
+    // ========================================================
 
     if (cleanEmail) {
       const emailRegex =
@@ -86,8 +145,7 @@ export async function POST(request: Request) {
         return NextResponse.json(
           {
             success: false,
-            message:
-              "Please enter a valid email address.",
+            message: "Please enter a valid email address.",
           },
           {
             status: 400,
@@ -96,41 +154,119 @@ export async function POST(request: Request) {
       }
     }
 
-    // ------------------------------------------------------------
-    // SAVE TO FIRESTORE
-    // ------------------------------------------------------------
+    // ========================================================
+    // GENERATE UNIQUE TICKET
+    // ========================================================
 
-    const inquiryRef = await addDoc(
-      collection(db, "inquiries"),
-      {
+    const ticketId = generateTicketId();
+
+    // ========================================================
+    // SAVE ENQUIRY TO FIRESTORE
+    // ========================================================
+
+    const inquiryRef = await adminDb
+      .collection("inquiries")
+      .add({
+        ticketId,
+
         name: cleanName,
 
         phone: cleanPhone,
 
-        // Empty string is stored when email is not provided.
         email: cleanEmail,
 
         vertical: cleanVertical,
 
         message: cleanMessage,
 
-        createdAt: serverTimestamp(),
+        createdAt: FieldValue.serverTimestamp(),
 
         source: "contact-page",
 
         status: "new",
-      }
-    );
 
-    // ------------------------------------------------------------
-    // SUCCESS RESPONSE
-    // ------------------------------------------------------------
+        emailStatus: "pending",
+      });
+
+    // ========================================================
+    // SEND EMAIL IN BACKGROUND
+    // ========================================================
+
+    after(async () => {
+      try {
+        // ----------------------------------------------------
+        // SEND EMAIL
+        // ----------------------------------------------------
+
+        await sendEnquiryEmail({
+          ticketId,
+          name: cleanName,
+          phone: cleanPhone,
+          email: cleanEmail,
+          vertical: cleanVertical,
+          message: cleanMessage,
+        });
+
+        // ----------------------------------------------------
+        // MARK EMAIL AS SENT
+        // ----------------------------------------------------
+
+        await inquiryRef.update({
+          emailStatus: "sent",
+          emailSentAt: FieldValue.serverTimestamp(),
+        });
+
+        console.log(
+          `CONTACT EMAIL SENT: ${ticketId}`
+        );
+      } catch (emailError) {
+        // ----------------------------------------------------
+        // EMAIL FAILED
+        // ----------------------------------------------------
+
+        console.error(
+          `CONTACT EMAIL FAILED: ${ticketId}`,
+          emailError
+        );
+
+        // ----------------------------------------------------
+        // SAVE EMAIL FAILURE
+        // ----------------------------------------------------
+
+        try {
+          await inquiryRef.update({
+            emailStatus: "failed",
+
+            emailError:
+              emailError instanceof Error
+                ? emailError.message
+                : "Unknown email error",
+
+            emailFailedAt:
+              FieldValue.serverTimestamp(),
+          });
+        } catch (firestoreError) {
+          console.error(
+            "EMAIL STATUS UPDATE FAILED:",
+            firestoreError
+          );
+        }
+      }
+    });
+
+    // ========================================================
+    // IMMEDIATE SUCCESS RESPONSE
+    // ========================================================
 
     return NextResponse.json(
       {
         success: true,
+
         message:
-          "Thank you. Your inquiry has been submitted successfully.",
+          "Thank you! We have received your enquiry. Our team will contact you shortly.",
+
+        ticketId,
+
         id: inquiryRef.id,
       },
       {
@@ -138,6 +274,10 @@ export async function POST(request: Request) {
       }
     );
   } catch (error) {
+    // ========================================================
+    // API ERROR
+    // ========================================================
+
     console.error(
       "CONTACT API ERROR:",
       error
@@ -146,8 +286,9 @@ export async function POST(request: Request) {
     return NextResponse.json(
       {
         success: false,
+
         message:
-          "Unable to submit your inquiry right now. Please try again.",
+          "Unable to submit your enquiry right now. Please try again.",
       },
       {
         status: 500,

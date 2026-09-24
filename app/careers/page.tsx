@@ -340,7 +340,6 @@ export default function CareersPage() {
     <main
       className={`${cormorant.variable} ${montserrat.variable} min-h-screen overflow-hidden bg-[#F7F4EE] text-[#231F20]`}
     >
-
       {/* ======================================================
           HERO
       ====================================================== */}
@@ -379,7 +378,7 @@ export default function CareersPage() {
 
           <motion.h1
             variants={fadeUp}
-            className="max-w-6xl break-words px-0 font-[family-name:var(--font-cormorant)] text-[3.35rem] font-medium leading-[0.82] tracking-[-0.035em] text-[#F7F4EE] sm:text-[5.5rem] md:text-[8rem] lg:text-[10rem]"
+            className="max-w-6xl break-words px-0 font-[family-name:var(--font-cormorant)] text-[3.35rem] font-medium leading-[0.9] tracking-[-0.035em] text-[#F7F4EE] sm:text-[5.5rem] md:text-[8rem] lg:text-[10rem]"
           >
             Build
             <br />
@@ -444,23 +443,27 @@ export default function CareersPage() {
 
           <motion.div variants={fadeUp}>
 
-            <h2 className="max-w-5xl font-[family-name:var(--font-cormorant)] text-[3.2rem] font-medium leading-[0.9] tracking-[-0.02em] text-[#231F20] sm:text-5xl md:text-7xl">
-              Good design starts
-              <br />
+            {/* FIXED HEADING */}
+            <h2 className="max-w-5xl font-[family-name:var(--font-cormorant)] text-[3rem] font-medium leading-[0.98] tracking-[-0.02em] text-[#231F20] sm:text-[4.2rem] md:text-[5.5rem] lg:text-[6.2rem]">
 
-              <span className="italic text-[#8F9A9B]">
+              <span className="block whitespace-nowrap">
+                Good design starts
+              </span>
+
+              <span className="mt-1 block italic leading-[1.02] text-[#8F9A9B] sm:mt-2">
                 with good people.
               </span>
+
             </h2>
 
-            <p className="mt-7 max-w-2xl font-[family-name:var(--font-montserrat)] text-xs font-medium leading-[1.9] text-[#514D45] sm:mt-9 sm:text-sm md:text-base">
+            <p className="mt-8 max-w-2xl font-[family-name:var(--font-montserrat)] text-xs font-medium leading-[1.9] text-[#514D45] sm:mt-10 sm:text-sm md:text-base">
               At ASANG, we believe the strongest work comes
               from collaboration. We bring together different
               perspectives, skills and experiences to create
               spaces that are considered from every angle.
             </p>
 
-            <p className="mt-4 max-w-2xl font-[family-name:var(--font-montserrat)] text-xs font-medium leading-[1.9] text-[#514D45] sm:mt-5 sm:text-sm md:text-base">
+            <p className="mt-5 max-w-2xl font-[family-name:var(--font-montserrat)] text-xs font-medium leading-[1.9] text-[#514D45] sm:mt-6 sm:text-sm md:text-base">
               Whether you are an experienced architect,
               an emerging designer or someone beginning your
               journey, there is room to learn, contribute and
@@ -506,7 +509,7 @@ export default function CareersPage() {
 
             <motion.h2
               variants={fadeUp}
-              className="mt-6 max-w-4xl font-[family-name:var(--font-cormorant)] text-[3.2rem] font-medium leading-[0.88] text-[#231F20] sm:text-5xl md:text-7xl"
+              className="mt-6 max-w-4xl font-[family-name:var(--font-cormorant)] text-[3.2rem] font-medium leading-[0.95] text-[#231F20] sm:text-5xl md:text-7xl"
             >
               A place to
               <br />
@@ -588,7 +591,7 @@ export default function CareersPage() {
 
             <motion.h2
               variants={fadeUp}
-              className="mt-6 font-[family-name:var(--font-cormorant)] text-[3.2rem] font-medium leading-[0.88] text-[#F7F4EE] sm:text-5xl md:text-7xl"
+              className="mt-6 font-[family-name:var(--font-cormorant)] text-[3.2rem] font-medium leading-[0.95] text-[#F7F4EE] sm:text-5xl md:text-7xl"
             >
               Open
               <br />
@@ -745,7 +748,7 @@ export default function CareersPage() {
 
               <motion.h2
                 variants={fadeUp}
-                className="mt-6 font-[family-name:var(--font-cormorant)] text-[3.2rem] font-medium leading-[0.88] text-[#231F20] sm:text-5xl md:text-7xl"
+                className="mt-6 font-[family-name:var(--font-cormorant)] text-[3.2rem] font-medium leading-[0.95] text-[#231F20] sm:text-5xl md:text-7xl"
               >
                 Tell us
                 <br />
@@ -1049,107 +1052,6 @@ export default function CareersPage() {
           </div>
 
         </div>
-
-      </section>
-
-      {/* ======================================================
-          CONTACT CTA
-      ====================================================== */}
-
-      <section className="bg-[#DCC9A8] px-5 py-20 sm:px-8 sm:py-24 md:px-16 md:py-28 lg:px-24">
-
-        <motion.div
-          initial={{
-            opacity: 0,
-            y: 30,
-          }}
-          whileInView={{
-            opacity: 1,
-            y: 0,
-          }}
-          viewport={{
-            once: true,
-            amount: 0.25,
-          }}
-          transition={{
-            duration: 0.8,
-          }}
-          className="mx-auto max-w-7xl"
-        >
-
-          <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between md:gap-10">
-
-            <div>
-
-              <p className="mb-4 font-[family-name:var(--font-montserrat)] text-[10px] font-semibold uppercase tracking-[0.28em] text-[#6C665D] sm:mb-5 sm:text-xs sm:tracking-[0.35em]">
-                Have a question?
-              </p>
-
-              <h2 className="max-w-3xl break-words font-[family-name:var(--font-cormorant)] text-[2.9rem] font-medium leading-[0.88] text-[#231F20] sm:text-5xl md:text-7xl">
-                Let&apos;s start
-                <br />
-
-                <span className="italic">
-                  a conversation.
-                </span>
-              </h2>
-
-              <p className="mt-6 max-w-lg font-[family-name:var(--font-montserrat)] text-xs font-medium leading-[1.9] text-[#514D45] sm:mt-8 sm:text-sm">
-                Speak with{" "}
-                {contactPerson}{" "}
-                about careers,
-                opportunities or working with ASANG.
-              </p>
-
-            </div>
-
-            <div className="flex flex-col gap-3 sm:flex-row">
-
-              <a
-                href={`mailto:${contactEmail}`}
-                className="flex w-full items-center justify-center rounded-full border border-[#231F20]/30 px-6 py-3.5 text-center font-[family-name:var(--font-montserrat)] text-[9px] font-semibold uppercase tracking-[0.15em] text-[#231F20] transition-all duration-300 hover:bg-[#231F20] hover:text-[#DCC9A8] sm:w-fit sm:text-[10px] sm:tracking-[0.18em]"
-              >
-                Email Us
-              </a>
-
-              <button
-                type="button"
-                onClick={handleCopyEmail}
-                className="flex w-full items-center justify-center rounded-full border border-[#231F20]/30 px-6 py-3.5 text-center font-[family-name:var(--font-montserrat)] text-[9px] font-semibold uppercase tracking-[0.15em] text-[#231F20] transition-all duration-300 hover:bg-[#231F20] hover:text-[#DCC9A8] sm:w-fit sm:text-[10px] sm:tracking-[0.18em]"
-              >
-                {copied
-                  ? "Email Copied"
-                  : "Copy Email"}
-              </button>
-
-              <a
-                href={whatsappUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex w-full items-center justify-center rounded-full bg-[#231F20] px-6 py-3.5 text-center font-[family-name:var(--font-montserrat)] text-[9px] font-semibold uppercase tracking-[0.15em] text-white transition-all duration-300 hover:bg-[#3A3435] sm:w-fit sm:text-[10px] sm:tracking-[0.18em]"
-              >
-                WhatsApp
-              </a>
-
-            </div>
-
-          </div>
-
-          <div className="mt-10 flex flex-col gap-2 border-t border-[#231F20]/20 pt-6 font-[family-name:var(--font-montserrat)] text-[9px] uppercase tracking-[0.15em] text-[#6C665D] sm:flex-row sm:items-center sm:gap-6 sm:text-[10px]">
-
-            <span className="break-all">
-              {contactEmail}
-            </span>
-
-            <span className="hidden h-1 w-1 rounded-full bg-[#6C665D] sm:block" />
-
-            <span>
-              {whatsappPhoneDisplay}
-            </span>
-
-          </div>
-
-        </motion.div>
 
       </section>
 

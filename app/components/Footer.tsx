@@ -435,9 +435,9 @@ export default function Footer() {
             </h4>
 
             <FooterLink href="/about">About Us</FooterLink>
-            <FooterLink href="/projects">Selected Projects</FooterLink>
-            <FooterLink href="/studio">The Studio</FooterLink>
-            <FooterLink href="/blog">Journal</FooterLink>
+            <FooterLink href="/portfolio">Selected Projects</FooterLink>
+            <FooterLink href="/contact">The Studio</FooterLink>
+            <FooterLink href="/">Journal</FooterLink>
           </div>
 
           {/* CONTACT */}

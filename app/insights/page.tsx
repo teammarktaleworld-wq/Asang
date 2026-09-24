@@ -405,17 +405,7 @@ export default function InsightsPage() {
                 and the way we experience space.
               </p>
 
-              <div className="flex flex-col items-start gap-2 sm:flex-row sm:items-center sm:gap-4">
-                <span
-                  className="
-                    font-[family-name:var(--font-cormorant)]
-                    text-4xl
-                    text-[#DCC9A8]
-                  "
-                >
-                  2022—
-                </span>
-
+              <div className="flex items-center">
                 <span
                   className="
                     font-[family-name:var(--font-montserrat)]
@@ -860,20 +850,6 @@ export default function InsightsPage() {
                     />
 
                     <div className="absolute inset-0 bg-black/0 transition-colors duration-500 group-hover:bg-black/10" />
-
-                    {/* Number */}
-
-                    <div className="absolute left-4 top-4 flex h-9 w-9 sm:left-5 sm:top-5 sm:h-10 sm:w-10 items-center justify-center rounded-full border border-white/40 bg-black/10 backdrop-blur-md">
-                      <span
-                        className="
-                          font-[family-name:var(--font-cormorant)]
-                          text-lg
-                          text-white
-                        "
-                      >
-                        {insight.number}
-                      </span>
-                    </div>
 
                     {/* Category */}
 

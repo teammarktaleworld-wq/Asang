@@ -417,9 +417,7 @@ export default function PrivacyPage() {
 
               {/* Footer row */}
               <div className="pt-2 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5">
-                <p className="font-[family-name:var(--font-montserrat)] text-[9px] uppercase tracking-[0.3em] text-[#0E0E0E]/25">
-                  Last updated: {EFFECTIVE_DATE}
-                </p>
+            
                 <Link
                   href="/"
                   className="group flex items-center gap-3 font-[family-name:var(--font-montserrat)] text-[9px] font-semibold uppercase tracking-[0.3em] text-[#0E0E0E]/30 hover:text-[#0E0E0E] transition-colors duration-200"

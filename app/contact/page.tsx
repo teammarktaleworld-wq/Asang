@@ -79,9 +79,8 @@ const CONTACT = {
 // ─────────────────────────────────────────────────────────────────────────────
 
 const MAPS_URL =
-  `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-    CONTACT.addressFull
-  )}`;
+  process.env.NEXT_PUBLIC_GOOGLE_MAPS_URL ||
+  "https://www.google.com/maps?q=28.62101173400879,77.37796020507812&z=17&hl=en";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // WHATSAPP
@@ -614,6 +613,186 @@ function FloatingField({
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
+// ANIMATED SUCCESS MESSAGE
+// ─────────────────────────────────────────────────────────────────────────────
+
+function SuccessMessage({
+  message,
+}: {
+  message: string;
+}) {
+  return (
+    <motion.div
+      key="success"
+      initial={{
+        opacity: 0,
+        y: 24,
+        scale: 0.96,
+      }}
+      animate={{
+        opacity: 1,
+        y: 0,
+        scale: 1,
+      }}
+      exit={{
+        opacity: 0,
+        y: -16,
+        scale: 0.98,
+      }}
+      transition={{
+        duration: 0.55,
+        ease: [0.16, 1, 0.3, 1],
+      }}
+      role="status"
+      aria-live="polite"
+      className="
+        relative
+        overflow-hidden
+        border
+        border-[#DCC9A8]/60
+        bg-[#F1ECE2]
+        px-6
+        py-7
+        font-[family-name:var(--font-montserrat)]
+        text-[#231F20]
+      "
+    >
+      {/* Soft animated background glow */}
+      <motion.div
+        aria-hidden="true"
+        className="
+          pointer-events-none
+          absolute
+          -right-10
+          -top-10
+          h-28
+          w-28
+          rounded-full
+          bg-[#DCC9A8]/20
+          blur-2xl
+        "
+        initial={{ scale: 0.7, opacity: 0 }}
+        animate={{ scale: 1.2, opacity: 1 }}
+        transition={{
+          duration: 0.8,
+          ease: "easeOut",
+        }}
+      />
+
+      <div className="relative flex items-start gap-4">
+        {/* Animated check circle */}
+        <motion.div
+          initial={{
+            scale: 0,
+            rotate: -25,
+          }}
+          animate={{
+            scale: 1,
+            rotate: 0,
+          }}
+          transition={{
+            delay: 0.12,
+            duration: 0.55,
+            type: "spring",
+            stiffness: 220,
+            damping: 14,
+          }}
+          className="
+            flex
+            h-12
+            w-12
+            shrink-0
+            items-center
+            justify-center
+            rounded-full
+            border
+            border-[#8F9A9B]/30
+            bg-[#F7F4EE]
+          "
+        >
+          <motion.svg
+            viewBox="0 0 24 24"
+            fill="none"
+            className="h-5 w-5 text-[#3B5336]"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4, duration: 0.25 }}
+          >
+            <motion.path
+              d="m5 12 4 4L19 6"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              initial={{
+                pathLength: 0,
+              }}
+              animate={{
+                pathLength: 1,
+              }}
+              transition={{
+                delay: 0.32,
+                duration: 0.45,
+                ease: "easeOut",
+              }}
+            />
+          </motion.svg>
+        </motion.div>
+
+        <div className="min-w-0">
+          <motion.p
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.35 }}
+            className="
+              mb-1
+              font-[family-name:var(--font-cormorant)]
+              text-3xl
+              font-medium
+              leading-tight
+            "
+          >
+            Thank you!
+          </motion.p>
+
+          <motion.p
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3, duration: 0.35 }}
+            className="
+              text-sm
+              leading-7
+              text-[#514D45]
+            "
+          >
+            {message}
+          </motion.p>
+        </div>
+      </div>
+
+      {/* Animated bottom line */}
+      <motion.div
+        aria-hidden="true"
+        className="
+          absolute
+          bottom-0
+          left-0
+          h-[2px]
+          bg-[#DCC9A8]
+        "
+        initial={{ width: "0%" }}
+        animate={{ width: "100%" }}
+        transition={{
+          delay: 0.15,
+          duration: 1.2,
+          ease: "easeOut",
+        }}
+      />
+    </motion.div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 // COMPONENT
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -739,8 +918,7 @@ export default function ContactUs() {
       setStatus("success");
 
       setStatusMessage(
-        data.message ||
-          "Thank you. Your inquiry has been submitted successfully."
+        "We have received your enquiry. Our team will contact you shortly."
       );
 
       setFormData({
@@ -913,9 +1091,9 @@ export default function ContactUs() {
               md:text-base
             "
           >
-            From new homes and villas to
-            residential interiors, renovations,
-            offices, and retail spaces, we bring
+            From new homes and residential
+            interiors, renovations, offices,
+            commercial, and retail spaces, we bring
             together thoughtful design and precise
             execution to transform your vision
             into reality.
@@ -1038,7 +1216,7 @@ export default function ContactUs() {
                     value=""
                     disabled
                   >
-                    Select a vertical...
+                    Select a project type...
                   </option>
 
                   <option value="residential">
@@ -1047,10 +1225,6 @@ export default function ContactUs() {
 
                   <option value="commercial">
                     Commercial
-                  </option>
-
-                  <option value="industrial">
-                    Industrial
                   </option>
 
                   <option value="retail">
@@ -1063,10 +1237,6 @@ export default function ContactUs() {
 
                   <option value="renovation">
                     Renovation
-                  </option>
-
-                  <option value="villa">
-                    Villa
                   </option>
 
                   <option value="other">
@@ -1091,35 +1261,9 @@ export default function ContactUs() {
               <AnimatePresence mode="wait">
                 {status ===
                   "success" && (
-                  <motion.div
-                    key="success"
-                    initial={{
-                      opacity: 0,
-                      y: -8,
-                    }}
-                    animate={{
-                      opacity: 1,
-                      y: 0,
-                    }}
-                    exit={{
-                      opacity: 0,
-                      y: -8,
-                    }}
-                    role="status"
-                    className="
-                      border
-                      border-green-200/50
-                      bg-[#e8f0e5]
-                      px-4
-                      py-3
-                      font-[family-name:var(--font-montserrat)]
-                      text-sm
-                      font-medium
-                      text-[#3b5336]
-                    "
-                  >
-                    {statusMessage}
-                  </motion.div>
+                  <SuccessMessage
+                    message={statusMessage}
+                  />
                 )}
 
                 {status ===
@@ -1226,7 +1370,7 @@ export default function ContactUs() {
                   )}
 
                   {isLoading
-                    ? "Sending..."
+                    ? "Submitting..."
                     : "Send Inquiry"}
                 </span>
               </motion.button>
@@ -1465,7 +1609,7 @@ export default function ContactUs() {
               >
                 Monday – Friday
                 <br />
-                9:00 AM – 6:00 PM
+                9:30 AM – 6:00 PM
               </p>
             </div>
 

@@ -13,6 +13,16 @@ export default function Navbar() {
   const lastScrollY = useRef(0);
   const pathname = usePathname();
 
+  // ============================================================
+  // HOME PAGE CHECK
+  // ============================================================
+
+  const isHomePage = pathname === "/";
+
+  // ============================================================
+  // NAVIGATION LINKS
+  // ============================================================
+
   const navLinks = [
     { name: "Portfolio", href: "/portfolio" },
     { name: "Services", href: "/services" },
@@ -22,9 +32,9 @@ export default function Navbar() {
     { name: "Contact", href: "/contact" },
   ];
 
-  /* =========================================================
-     SCROLL HANDLER
-     ========================================================= */
+  // ============================================================
+  // SCROLL HANDLER
+  // ============================================================
 
   useEffect(() => {
     const handleScroll = () => {
@@ -53,17 +63,19 @@ export default function Navbar() {
     };
   }, []);
 
-  /* =========================================================
-     CLOSE MOBILE MENU WHEN ROUTE CHANGES
-     ========================================================= */
+  // ============================================================
+  // CLOSE MOBILE MENU WHEN ROUTE CHANGES
+  // ============================================================
 
   useEffect(() => {
     setIsMobileMenuOpen(false);
+
+    setIsScrolled(window.scrollY > 20);
   }, [pathname]);
 
-  /* =========================================================
-     PREVENT BODY SCROLL WHEN MOBILE MENU IS OPEN
-     ========================================================= */
+  // ============================================================
+  // PREVENT BODY SCROLL WHEN MOBILE MENU IS OPEN
+  // ============================================================
 
   useEffect(() => {
     if (isMobileMenuOpen) {
@@ -77,7 +89,41 @@ export default function Navbar() {
     };
   }, [isMobileMenuOpen]);
 
-  const textColor = isScrolled ? "#111111" : "#ffffff";
+  // ============================================================
+  // NAVBAR COLORS
+  //
+  // HOME:
+  // Top       = transparent + white text
+  // Scrolled  = white background + dark text
+  //
+  // OTHER PAGES:
+  // Always    = white background + dark text
+  // ============================================================
+
+  const isTransparentHome =
+    isHomePage && !isScrolled && !isMobileMenuOpen;
+
+  const textColor = isTransparentHome ? "#ffffff" : "#111111";
+
+  const navBackground = isTransparentHome
+    ? "transparent"
+    : "rgba(255, 255, 255, 0.94)";
+
+  const navBackdrop = isTransparentHome
+    ? "none"
+    : "blur(18px)";
+
+  const navShadow = isTransparentHome
+    ? "none"
+    : "0 2px 24px rgba(0, 0, 0, 0.08)";
+
+  const navBorder = isTransparentHome
+    ? "1px solid transparent"
+    : "1px solid rgba(0, 0, 0, 0.06)";
+
+  // ============================================================
+  // RENDER
+  // ============================================================
 
   return (
     <header
@@ -88,7 +134,10 @@ export default function Navbar() {
         right: 0,
         zIndex: 100,
 
-        transform: isVisible ? "translateY(0)" : "translateY(-110%)",
+        transform: isVisible
+          ? "translateY(0)"
+          : "translateY(-110%)",
+
         opacity: isVisible ? 1 : 0,
 
         transition:
@@ -112,27 +161,29 @@ export default function Navbar() {
 
           width: "100%",
 
-          padding: isScrolled ? "12px 32px" : "18px 38px",
+          /*
+           * REDUCED NAVBAR HEIGHT
+           */
+          padding: isScrolled
+            ? "8px 28px"
+            : "10px 32px",
 
-          background: isScrolled
-            ? "rgba(255, 255, 255, 0.94)"
-            : "transparent",
+          background: navBackground,
 
-          backdropFilter: isScrolled ? "blur(18px)" : "none",
-          WebkitBackdropFilter: isScrolled ? "blur(18px)" : "none",
+          backdropFilter: navBackdrop,
+          WebkitBackdropFilter: navBackdrop,
 
-          boxShadow: isScrolled
-            ? "0 2px 24px rgba(0, 0, 0, 0.08)"
-            : "none",
+          boxShadow: navShadow,
 
-          borderBottom: isScrolled
-            ? "1px solid rgba(0, 0, 0, 0.06)"
-            : "1px solid transparent",
+          borderBottom: navBorder,
 
           transition:
             "padding 0.4s ease, background 0.4s ease, box-shadow 0.4s ease, border-bottom 0.4s ease",
 
-          minHeight: isScrolled ? "72px" : "84px",
+          /*
+           * REDUCED HEIGHT
+           */
+          minHeight: isScrolled ? "62px" : "72px",
         }}
       >
         {/* =====================================================
@@ -160,9 +211,16 @@ export default function Navbar() {
             className="asang-logo"
             style={{
               width: "auto",
-              height: isScrolled ? "48px" : "60px",
+
+              /*
+               * REDUCED LOGO HEIGHT
+               */
+              height: isScrolled ? "42px" : "48px",
+
               objectFit: "contain",
+
               transition: "height 0.4s ease",
+
               display: "block",
             }}
           />
@@ -204,7 +262,9 @@ export default function Navbar() {
                 <Link
                   href={link.href}
                   className="asang-nav-link"
-                  aria-current={isActive ? "page" : undefined}
+                  aria-current={
+                    isActive ? "page" : undefined
+                  }
                   style={{
                     position: "relative",
 
@@ -217,11 +277,13 @@ export default function Navbar() {
                     textTransform: "uppercase",
 
                     color: textColor,
+
                     textDecoration: "none",
 
                     paddingBottom: "6px",
 
-                    transition: "color 0.3s ease, opacity 0.3s ease",
+                    transition:
+                      "color 0.3s ease, opacity 0.3s ease",
                   }}
                 >
                   {link.name}
@@ -242,7 +304,9 @@ export default function Navbar() {
 
                       transformOrigin: "left",
 
-                      transform: isActive ? "scaleX(1)" : "scaleX(0)",
+                      transform: isActive
+                        ? "scaleX(1)"
+                        : "scaleX(0)",
 
                       transition:
                         "transform 0.3s ease, background 0.3s ease",
@@ -279,7 +343,7 @@ export default function Navbar() {
 
               minWidth: "160px",
 
-              padding: "10px 25px",
+              padding: "9px 24px",
 
               fontSize: "11px",
               letterSpacing: "0.14em",
@@ -289,20 +353,26 @@ export default function Navbar() {
 
               color: "#ffffff",
 
-              background: isScrolled
-                ? "#111111"
-                : "rgba(0, 0, 0, 0.22)",
+              background: isTransparentHome
+                ? "rgba(0, 0, 0, 0.22)"
+                : "#111111",
 
-              border: isScrolled
-                ? "1px solid #111111"
-                : "1px solid rgba(255,255,255,0.55)",
+              border: isTransparentHome
+                ? "1px solid rgba(255,255,255,0.55)"
+                : "1px solid #111111",
 
               borderRadius: "100px",
 
               textDecoration: "none",
 
-              backdropFilter: isScrolled ? "none" : "blur(8px)",
-              WebkitBackdropFilter: isScrolled ? "none" : "blur(8px)",
+              backdropFilter: isTransparentHome
+                ? "blur(8px)"
+                : "none",
+
+              WebkitBackdropFilter:
+                isTransparentHome
+                  ? "blur(8px)"
+                  : "none",
 
               transition: "all 0.3s ease",
             }}
@@ -317,8 +387,16 @@ export default function Navbar() {
 
         <button
           type="button"
-          onClick={() => setIsMobileMenuOpen((previous) => !previous)}
-          aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+          onClick={() =>
+            setIsMobileMenuOpen(
+              (previous) => !previous
+            )
+          }
+          aria-label={
+            isMobileMenuOpen
+              ? "Close menu"
+              : "Open menu"
+          }
           aria-expanded={isMobileMenuOpen}
           className="asang-mobile-toggle"
           style={{
@@ -340,10 +418,12 @@ export default function Navbar() {
 
             zIndex: 60,
 
-            WebkitTapHighlightColor: "transparent",
+            WebkitTapHighlightColor:
+              "transparent",
           }}
         >
           {/* First line */}
+
           <span
             style={{
               display: "block",
@@ -365,6 +445,7 @@ export default function Navbar() {
           />
 
           {/* Second line */}
+
           <span
             style={{
               display: "block",
@@ -377,11 +458,14 @@ export default function Navbar() {
               transition:
                 "opacity 0.3s ease, width 0.3s ease",
 
-              opacity: isMobileMenuOpen ? 0 : 1,
+              opacity: isMobileMenuOpen
+                ? 0
+                : 1,
             }}
           />
 
           {/* Third line */}
+
           <span
             style={{
               display: "block",
@@ -417,16 +501,21 @@ export default function Navbar() {
           left: 0,
           right: 0,
 
-          background: "rgba(255,255,255,0.97)",
+          background:
+            "rgba(255,255,255,0.97)",
 
           backdropFilter: "blur(20px)",
-          WebkitBackdropFilter: "blur(20px)",
+          WebkitBackdropFilter:
+            "blur(20px)",
 
-          borderBottom: "1px solid rgba(0,0,0,0.06)",
+          borderBottom:
+            "1px solid rgba(0,0,0,0.06)",
 
           overflow: "hidden",
 
-          maxHeight: isMobileMenuOpen ? "600px" : "0px",
+          maxHeight: isMobileMenuOpen
+            ? "600px"
+            : "0px",
 
           opacity: isMobileMenuOpen ? 1 : 0,
 
@@ -437,13 +526,17 @@ export default function Navbar() {
           transition:
             "max-height 0.4s cubic-bezier(0.4,0,0.2,1), opacity 0.3s ease, transform 0.35s ease",
 
-          pointerEvents: isMobileMenuOpen ? "auto" : "none",
+          pointerEvents: isMobileMenuOpen
+            ? "auto"
+            : "none",
         }}
       >
         <div
           style={{
             display: "flex",
+
             flexDirection: "column",
+
             alignItems: "center",
 
             gap: 0,
@@ -460,20 +553,27 @@ export default function Navbar() {
           {navLinks.map((link, index) => {
             const isActive =
               pathname === link.href ||
-              pathname.startsWith(`${link.href}/`);
+              pathname.startsWith(
+                `${link.href}/`
+              );
 
             return (
               <Link
                 key={link.name}
                 href={link.href}
-                onClick={() => setIsMobileMenuOpen(false)}
-                aria-current={isActive ? "page" : undefined}
+                onClick={() =>
+                  setIsMobileMenuOpen(false)
+                }
+                aria-current={
+                  isActive ? "page" : undefined
+                }
                 className="asang-mobile-nav-link"
                 style={{
                   display: "flex",
 
                   alignItems: "center",
-                  justifyContent: "space-between",
+                  justifyContent:
+                    "space-between",
 
                   width: "100%",
                   maxWidth: "520px",
@@ -488,19 +588,23 @@ export default function Navbar() {
 
                   textTransform: "uppercase",
 
-                  color: isActive ? "#000000" : "#666666",
+                  color: isActive
+                    ? "#000000"
+                    : "#666666",
 
                   textDecoration: "none",
 
                   borderBottom:
-                    index < navLinks.length - 1
+                    index <
+                    navLinks.length - 1
                       ? "1px solid rgba(0,0,0,0.06)"
                       : "none",
 
                   transition:
                     "color 0.2s ease, padding 0.2s ease",
 
-                  WebkitTapHighlightColor: "transparent",
+                  WebkitTapHighlightColor:
+                    "transparent",
                 }}
               >
                 <span>{link.name}</span>
@@ -532,7 +636,9 @@ export default function Navbar() {
 
           <Link
             href="/contact"
-            onClick={() => setIsMobileMenuOpen(false)}
+            onClick={() =>
+              setIsMobileMenuOpen(false)
+            }
             className="asang-mobile-contact"
             style={{
               display: "inline-flex",
@@ -564,7 +670,8 @@ export default function Navbar() {
               transition:
                 "transform 0.2s ease, background 0.2s ease",
 
-              WebkitTapHighlightColor: "transparent",
+              WebkitTapHighlightColor:
+                "transparent",
             }}
           >
             Contact Us
@@ -607,7 +714,8 @@ export default function Navbar() {
           opacity: 0.7;
         }
 
-        .asang-nav-link:hover .asang-nav-underline {
+        .asang-nav-link:hover
+          .asang-nav-underline {
           transform: scaleX(1) !important;
         }
 
@@ -654,9 +762,9 @@ export default function Navbar() {
 
         @media (max-width: 767px) {
           .asang-logo {
-            height: 52px !important;
+            height: 46px !important;
             width: auto !important;
-            max-width: 150px;
+            max-width: 145px;
           }
         }
 
@@ -666,13 +774,17 @@ export default function Navbar() {
 
         @media (max-width: 380px) {
           .asang-logo {
-            height: 48px !important;
+            height: 43px !important;
             width: auto !important;
             max-width: 135px;
           }
 
           .asang-mobile-menu {
-            max-height: ${isMobileMenuOpen ? "650px" : "0px"};
+            max-height: ${
+              isMobileMenuOpen
+                ? "650px"
+                : "0px"
+            };
           }
         }
 
@@ -680,7 +792,9 @@ export default function Navbar() {
            SAFE AREA
            ================================================== */
 
-        @supports (padding: env(safe-area-inset-top)) {
+        @supports (
+          padding: env(safe-area-inset-top)
+        ) {
           @media (max-width: 767px) {
             .asang-logo {
               margin-top: max(
