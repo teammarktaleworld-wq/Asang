@@ -380,7 +380,8 @@ export default function CareersPage() {
             variants={fadeUp}
             className="max-w-6xl break-words px-0 font-[family-name:var(--font-cormorant)] text-[3.35rem] font-medium leading-[0.9] tracking-[-0.035em] text-[#F7F4EE] sm:text-[5.5rem] md:text-[8rem] lg:text-[10rem]"
           >
-            Build
+            DESIGN 
+
             <br />
 
             <span className="italic text-[#DCC9A8]">

@@ -1475,7 +1475,7 @@ const IMAGES = {
   material: "/images/Projects/image8.jpg",
   lighting: "/images/Projects/image15.jpg",
   living: "/images/Projects/image4.jpg",
-  detail: "/images/Projects/image11.jpg",
+  detail: "/images/Projects/image12.jpg",
   texture: "/images/Projects/image17.jpg",
   architecture: "/images/Projects/image7.jpg",
 };
