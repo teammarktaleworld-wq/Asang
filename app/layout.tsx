@@ -9,8 +9,6 @@ import "./globals.css";
 
 
 import GoogleAnalytics from "./components/GoogleAnalytics";
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
 
 
 const geistSans = Geist({
@@ -44,14 +42,14 @@ export default function RootLayout({
         <GoogleAnalytics />
 
         {/* Navbar */}
-        <Navbar />
+        {/* <Navbar /> */}
 
         <main className="flex-1">
           {children}
         </main>
 
         {/* Footer */}
-        <Footer />
+        {/* <Footer /> */}
       </body>
     </html>
   );
