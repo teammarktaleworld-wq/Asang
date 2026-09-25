@@ -497,7 +497,7 @@ export default function LaunchCountdown() {
           {/* Headline */}
           <h1 className={`headline ${revealed ? "shown" : ""}`}>
             We open
-            <span className="headline-em">Tomorrow.</span>
+            <span className="headline-em">Today.</span>
           </h1>
 
           {/* Countdown */}
