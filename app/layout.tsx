@@ -11,6 +11,7 @@ import "./globals.css";
 import GoogleAnalytics from "./components/GoogleAnalytics";
 import Footer from './components/Footer';
 import Navbar from "./components/Navbar";
+import AsangChatbot from "./components/AsangChatbot";
 
 
 const geistSans = Geist({
@@ -52,6 +53,7 @@ export default function RootLayout({
 
         {/* Footer */}
         <Footer />
+        <AsangChatbot />
       </body>
     </html>
   );
